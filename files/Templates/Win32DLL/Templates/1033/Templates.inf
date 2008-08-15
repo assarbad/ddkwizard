@@ -1,0 +1,17 @@
+BUILD
+buildinc.cmd
+buildnumber.h
+ddkbldenv.cmd
+ddkpostbld.cmd
+ddkprebld.cmd
+PROJECT_NAME.c
+PROJECT_NAME.def
+PROJECT_NAME.h
+dllcommon.h
+dllversion.h
+dllversion.rc
+makefile
+makefile.inc
+msg_PROJECT_NAME.mc
+sources
+PROJECT_NAME.vsprops

@@ -1,0 +1,119 @@
+body {
+  font-family: Tahoma, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 8pt;
+  color: ButtonText;
+  background-color: ButtonFace;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  overflow: auto;
+  }
+
+tr {
+  vertical-align:top;
+  }
+
+a:link {
+  color: blue;
+  text-decoration: none;
+  }
+
+a:visited {
+  color: blue;
+  text-decoration: none;
+  }
+
+a:active {
+  color: blue;
+  text-decoration: none;
+  }
+
+a:hover {
+  color: blue;
+  text-decoration: underline;
+  }
+
+table {
+  font-family: Tahoma, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 8pt;
+  color: ButtonText;
+  width: 100%;
+  }
+
+table.one {
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+  }
+
+td.two {
+  height: 75px;
+  width: 100%;
+  background-color: Window;
+  }
+
+td.bottomline {
+  border-bottom:1px solid ButtonShadow;
+  }
+
+td.topline {
+  border-top:1px solid ButtonShadow;
+  }
+
+button {
+  font-family: Tahoma, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 8pt;
+  }
+
+.buttons {
+  height: 23px;
+  width:75px;
+  margin-right:0.3em;
+  }
+
+input {
+  font-size: 8pt;
+  color: ButtonText;
+  }
+
+select {
+  font-size: 8pt;
+  color: ButtonText;
+  }
+
+table.twocolumnstyle {
+  width:100%;
+  height:100%;
+  }
+
+td.twocolumnstyle {
+  width:50%;
+  vertical-align:top;
+  padding:3pt;
+  }
+
+td.rule {
+  background-color: Window;
+  height: 1px;
+  }
+
+img.smallest {
+  background-color: ActiveCaption;
+  margin-left:1em;
+  margin-right:1em;
+  }
+
+h4.head {
+  font-weight: bold;
+  font-size: 11pt;
+  color: WindowText;
+  margin-top:3pt;
+  }
+
+p.subhead {
+  color: WindowText;
+  }

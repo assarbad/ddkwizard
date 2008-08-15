@@ -1,0 +1,561 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html dir="ltr">
+<!--
+///////////////////////////////////////////////////////////////////////////////
+///
+/// Copyright (c) 2006-2007 by Oliver Schneider (assarbad.net)
+/// This software is provided 'as-is', without any express or implied warranty.
+/// In no event will the authors be held liable for any damages arising from
+/// the use of this software.
+///
+/// Permission is granted to anyone to use this software for any purpose,
+/// including commercial applications, and to alter it and redistribute it
+/// freely, subject to the following restrictions:
+///
+///   1. The origin of this software must not be misrepresented; you must not
+///      claim that you wrote the original software. If you use this software
+///      in a product, an acknowledgment in the product documentation would be
+///      appreciated but is not required.
+///
+///   2. Altered source versions must be plainly marked as such, and must not
+///      be misrepresented as being the original software.
+///
+///   3. This notice may not be removed or altered from any source distribution.
+///
+///////////////////////////////////////////////////////////////////////////////
+-->
+<head>
+<title>DDKWizard</title>
+	<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<link id="linkurl" rel="stylesheet" href="../../1033/styles.css">
+	
+	<!--  -->
+	<!-- The SYMBOL tag is used to set the default values for the user-defined symbols.-->
+	<!--  -->
+	<symbol name='WIZARD_DIALOG_TITLE' type=text value='DDKWizard 1.2.1 | DDKBUILD project creation'></symbol>
+	<symbol name='DDKBUILD_COMBOBOX' type="select-one" value="ddkbuild.cmd"></symbol>
+	<symbol name='STRICTERCPP_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='MAKEFILEINC_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='PROPERTYSHEET_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='MESSAGEFILE_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='SUPPORT64BIT_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='SUPPORT64BIT_AMD64_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='SUPPORT64BIT_IA64_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='BUILDSCRIPTS_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='AUTOINCBUILDNR_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='PREFASTCONFIG_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='PREFASTCONFIG_ONLYCHECKED_CHECKBOX' type="checkbox" value="true"></symbol>
+	<symbol name='OVERRIDEDDKBUILD_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='OVERRIDEW2KBASE_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='OVERRIDEWXPBASE_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='OVERRIDEWNETBASE_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='OVERRIDEWLHBASE_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='OVERRIDEDDKBUILD_TEXT' type="text" value="C:\WINDDK\ddkbuild.cmd"></symbol>
+	<symbol name='OVERRIDEW2KBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
+	<symbol name='OVERRIDEWXPBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
+	<symbol name='OVERRIDEWNETBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
+	<symbol name='OVERRIDEWLHBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
+	<symbol name='SOURCE_FILTER' type="text" value="cpp;c;cxx;def;asm;mc"></symbol>
+	<symbol name='HEADER_FILTER' type="text" value="h;hpp;hxx"></symbol>
+	<symbol name='RESOURCE_FILTER' type="text" value="rc;mc;ico;cur;bmp;dlg;rc2"></symbol>
+	<symbol name='SPECIAL_FILTER' type="text" value="*"></symbol>
+</head>
+<body bgcolor="buttonface" onload="InitDocument(document);" onkeydown="if(event.keyCode != 112) {OnKey();}" onkeypress="OnPress();">
+<script language="jscript" type="text/javascript">
+function GetDDKs()
+{
+	var strRet = "";
+	var selectElem = document.getElementById("DDK_CHOICE_LISTBOX");
+	for(var i = 0; i < selectElem.options.length; i++)
+	{
+		if(selectElem.options[i].selected)
+		{
+			strRet += selectElem.options[i].value;
+		}
+	}
+	return strRet;
+}
+
+function IsEmptyDDKs()
+{
+	return (GetDDKs().length == 0);
+}
+
+function SetSymbolDDKs()
+{
+	window.external.AddSymbol("DDK_LISTBOX", GetDDKs());
+	// Seems VS has problems to get symbol values from disabled elements. Hence enable them ...
+	var autoinc = document.getElementById('AUTOINCBUILDNR_CHECKBOX');
+	var buildscr = document.getElementById('BUILDSCRIPTS_CHECKBOX');
+	autoinc.disabled = false;
+	buildscr.disabled = false;
+}
+
+function OnClickLink(elem)
+{
+	var objShell = new ActiveXObject("Shell.Application");
+	objShell.ShellExecute(elem.href, "", "", "open", 1);
+	objShell = null;
+}
+
+var bOldAutoIncVal = true;
+var bOldBuildScriptsVal = true;
+
+function OnClickAutoIncCheckbox(elem)
+{
+	var buildscr = document.getElementById('BUILDSCRIPTS_CHECKBOX');
+	if(elem.checked)
+	{
+		buildscr.checked = true;
+		buildscr.disabled = true;
+	}
+	else
+	{
+		buildscr.disabled = false;
+	}
+}
+
+function OnChangeDdkBuildChoice(elem)
+{
+	var autoinc = document.getElementById('AUTOINCBUILDNR_CHECKBOX');
+	var buildscr = document.getElementById('BUILDSCRIPTS_CHECKBOX');
+	if(elem.value == "ddkbuild.cmd")
+	{
+		autoinc.checked = bOldAutoIncVal;
+		buildscr.checked = bOldBuildScriptsVal;
+		autoinc.disabled = false;
+		buildscr.disabled = false;
+		OnClickAutoIncCheckbox(autoinc);
+	}
+	else
+	{
+		bOldAutoIncVal = autoinc.checked;
+		autoinc.checked = false;
+		autoinc.disabled = true;
+		bOldBuildScriptsVal = buildscr.checked;
+		buildscr.checked = false;
+		buildscr.disabled = true;
+	}
+}
+
+function EnDisAbleOverrideCheckbox(str)
+{
+	var elem = document.getElementById(str);
+
+	for (i = 0; i < document.getElementsByTagName("label").length; i++)
+	{
+		var elem2 = document.getElementsByTagName("label")[i];
+		if(elem2.htmlFor == str)
+		{
+			var strInput = str;
+			var re = /_CHECKBOX$/;
+			strInput = strInput.replace(re, "_TEXT");
+			var elem3 = document.getElementById(strInput);
+			if(elem.checked)
+			{
+				elem.style.color = "WindowText";
+				elem2.style.color = "WindowText";
+				elem3.disabled = false;
+			}
+			else
+			{
+				elem.style.color = "gray";
+				elem2.style.color = "gray";
+				elem3.disabled = true;
+			}
+		}
+	}
+}
+
+function EnDisAbleAllOverrideCheckboxes()
+{
+	EnDisAbleOverrideCheckbox("OVERRIDEDDKBUILD_CHECKBOX");
+	EnDisAbleOverrideCheckbox("OVERRIDEW2KBASE_CHECKBOX");
+	EnDisAbleOverrideCheckbox("OVERRIDEWXPBASE_CHECKBOX");
+	EnDisAbleOverrideCheckbox("OVERRIDEWNETBASE_CHECKBOX");
+	EnDisAbleOverrideCheckbox("OVERRIDEWLHBASE_CHECKBOX");
+}
+
+function PropertySheetCheckbox(elem)
+{
+	if(!elem.checked)
+	{
+		document.getElementById("OVERRIDEDDKBUILD_CHECKBOX").checked = false;
+		document.getElementById("OVERRIDEW2KBASE_CHECKBOX").checked = false;
+		document.getElementById("OVERRIDEWXPBASE_CHECKBOX").checked = false;
+		document.getElementById("OVERRIDEWNETBASE_CHECKBOX").checked = false;
+		document.getElementById("OVERRIDEWLHBASE_CHECKBOX").checked = false;
+
+		document.getElementById("OVERRIDEDDKBUILD_CHECKBOX").disabled = true;
+		document.getElementById("OVERRIDEW2KBASE_CHECKBOX").disabled = true;
+		document.getElementById("OVERRIDEWXPBASE_CHECKBOX").disabled = true;
+		document.getElementById("OVERRIDEWNETBASE_CHECKBOX").disabled = true;
+		document.getElementById("OVERRIDEWLHBASE_CHECKBOX").disabled = true;
+	}
+	else
+	{
+		document.getElementById("OVERRIDEDDKBUILD_CHECKBOX").disabled = false;
+		document.getElementById("OVERRIDEW2KBASE_CHECKBOX").disabled = false;
+		document.getElementById("OVERRIDEWXPBASE_CHECKBOX").disabled = false;
+		document.getElementById("OVERRIDEWNETBASE_CHECKBOX").disabled = false;
+		document.getElementById("OVERRIDEWLHBASE_CHECKBOX").disabled = false;
+	}
+	EnDisAbleAllOverrideCheckboxes();
+}
+
+// For empty drivers
+function HideSuperfluousControls()
+{
+	document.getElementById("STRICTERCPP_CHECKBOX").checked = false;
+	document.getElementById("MAKEFILEINC_CHECKBOX").checked = false;
+	document.getElementById("MESSAGEFILE_CHECKBOX").checked = false;
+	document.getElementById("AUTOINCBUILDNR_CHECKBOX").checked = false;
+
+	document.getElementById("STRICTERCPP_CHECKBOX").disabled = true;
+	document.getElementById("MAKEFILEINC_CHECKBOX").disabled = true;
+	document.getElementById("MESSAGEFILE_CHECKBOX").disabled = true;
+	document.getElementById("AUTOINCBUILDNR_CHECKBOX").disabled = true;
+
+	document.getElementById("STRICTERCPP_CHECKBOX_LBL").style.display = "none";
+	document.getElementById("MAKEFILEINC_CHECKBOX_LBL").style.display = "none";
+	document.getElementById("MESSAGEFILE_CHECKBOX_LBL").style.display = "none";
+	document.getElementById("AUTOINCBUILDNR_CHECKBOX_LBL").style.display = "none";
+}
+
+function Bitness64Checkboxes()
+{
+	var elem = document.getElementById("SUPPORT64BIT_CHECKBOX");
+	if(!elem.checked)
+	{
+		document.getElementById("SUPPORT64BIT_AMD64_CHECKBOX").disabled = true;
+		document.getElementById("SUPPORT64BIT_IA64_CHECKBOX").disabled = true;
+
+		document.getElementById("SUPPORT64BIT_CHOICE_DESCRIPTION").style.display = "none";
+	}
+	else
+	{
+		document.getElementById("SUPPORT64BIT_AMD64_CHECKBOX").disabled = false;
+		document.getElementById("SUPPORT64BIT_IA64_CHECKBOX").disabled = false;
+
+		document.getElementById("SUPPORT64BIT_CHOICE_DESCRIPTION").style.display = "inline";
+	}
+}
+
+function PrefastCheckboxes()
+{
+	var elem = document.getElementById("PREFASTCONFIG_CHECKBOX");
+	if(!elem.checked)
+	{
+		document.getElementById("PREFASTCONFIG_ONLYCHECKED_CHECKBOX").disabled = true;
+
+		document.getElementById("PREFASTCONFIG_ONLYCHECKED_DESCRIPTION").style.display = "none";
+	}
+	else
+	{
+		document.getElementById("PREFASTCONFIG_ONLYCHECKED_CHECKBOX").disabled = false;
+
+		document.getElementById("PREFASTCONFIG_ONLYCHECKED_DESCRIPTION").style.display = "inline";
+	}
+}
+
+</script>
+
+	<table class="one" border="0" cellpadding="0" cellspacing="0">
+	<!--OPEN OF INTRODUCTORY INFORMATION TABLE//-->
+	<tr>
+			<td class="two bottomline">
+			<div style="float:left;">
+				<img id="SUBHEAD_IMAGE" class="smallest" src="../../Images/Driver.gif" width="98" height="70" alt="Logo" border="0" />
+			</div>
+			<div>
+				<h4 class="head" id="head">Welcome to <tt style="font-weight:bold; font-size:120%;">DDKWizard</tt></h4>
+				<p class="subhead" id="subhead" style="display:inline;"></p>
+			</div>
+		</td>
+	</tr>
+	<!--CLOSE OF INTRODUCTORY INFORMATION TABLE//-->
+
+	<!--OPEN OF NAVIGATION, CONTENT, AND BUTTON TABLES//-->
+	<tr valign="top">
+
+		<td valign="top" height="100%">
+		<!--OPEN OF CONTENT AND BUTTON TABLE//-->
+
+			<table class="one" border="0" cellpadding="0" cellspacing="0">
+			<tr valign="top">
+				<td height="100%">
+					<!--OPEN OF CONTENT//-->
+					<table width="100%" class="twocolumnstyle">
+					<tr>
+						<!-- FIRST COLUMN -->
+						<td width="50%" class="twocolumnstyle">
+							<div>
+								<label for="DDKBUILD_COMBOBOX" accesskey="B"
+									title="From this combobox choose the flavor of DDKBUILD you want to use!"
+								>Choose the DDK<u>B</u>UILD you want to use:</label><br />
+								<select size="1" id="DDKBUILD_COMBOBOX" onchange="OnChangeDdkBuildChoice(this);" style="width:70%;">
+									<option value="ddkbuild.cmd">DDKBUILD.CMD</option>
+									<option value="ddkbuild.bat">DDKBUILD.BAT</option>
+								</select>
+							</div>
+
+							<div style="padding-top:1em;">
+								<label for="DDK_CHOICE_LISTBOX" accesskey="D"
+									title="Choose one or more of the supported DDKs/WDKs that you want to be supported by the created projects."
+								>Which <u>D</u>DK(s) do you want to use:</label><br />
+								<select size="4" id="DDK_CHOICE_LISTBOX" multiple="multiple" style="width:70%;">
+									<option value="0">Windows 2000 DDK</option>
+									<option value="1">Windows XP DDK</option>
+									<option value="2" selected="selected">Windows 2003 DDK</option>
+									<option value="3" selected="selected">Longhorn/Vista WDK</option>
+								</select>
+							</div>
+
+							<div id="SUPPORT64BIT_CHECKBOX_LBL">
+								<input type="checkbox" id="SUPPORT64BIT_CHECKBOX" onclick="Bitness64Checkboxes();" />
+								<label for="SUPPORT64BIT_CHECKBOX" accesskey="6"
+									title="Support building 64bit binaries (obviously the selected DDK/WDK has to support it)"
+								>Support <u>6</u>4bit builds</label>
+								<span id="SUPPORT64BIT_CHOICE_DESCRIPTION">(for <input type="checkbox" id="SUPPORT64BIT_AMD64_CHECKBOX" onclick="Bitness64Checkboxes();" />
+								<label for="SUPPORT64BIT_AMD64_CHECKBOX"
+									title="This is to create a configuration for AMD64 and/or Intel EM64T binaries."
+								>X64</label>
+								<input type="checkbox" id="SUPPORT64BIT_IA64_CHECKBOX" onclick="Bitness64Checkboxes();" />
+								<label for="SUPPORT64BIT_IA64_CHECKBOX"
+									title="This is to create a configuration for Intels IA64 architecture, e.g. Itanium."
+								>IA64</label>)</span>
+							</div>
+
+							<div id="PREFASTCONFIG_CHECKBOX_LBL" style="padding-top:0.5em;">
+								<input type="checkbox" id="PREFASTCONFIG_CHECKBOX" onclick="PrefastCheckboxes();" />
+								<label for="PREFASTCONFIG_CHECKBOX" accesskey="A"
+									title="Allows you to create an extra configuration with PREfast settings. PREfast is a static code analysis tool that comes with the newer DDKs/WDKs."
+								>Create PREf<u>a</u>st configuration</label>
+								<span id="PREFASTCONFIG_ONLYCHECKED_DESCRIPTION">(<input type="checkbox" id="PREFASTCONFIG_ONLYCHECKED_CHECKBOX" onclick="PrefastCheckboxes();" />
+								<label for="PREFASTCONFIG_ONLYCHECKED_CHECKBOX" accesskey="Y"
+									title="Creates the PREfast configuration only for checked (i.e. debug) configurations."
+								>Onl<u>y</u> checked</label>)</span>
+							</div>
+
+							<div id="STRICTERCPP_CHECKBOX_LBL">
+								<input type="checkbox" id="STRICTERCPP_CHECKBOX" />
+								<label for="STRICTERCPP_CHECKBOX" accesskey="S"
+									title="C++ has several advantages, even when used in a kernel mode driver code. Despite stricter type-checking, namespaces are quite useful as well as templates. This option enables the creation of C++ files or keeps them as ordinary C files."
+								><u>S</u>tricter type checking (<tt>.cpp</tt>)</label>
+							</div>
+
+							<div id="AUTOINCBUILDNR_CHECKBOX_LBL">
+								<input type="checkbox" id="AUTOINCBUILDNR_CHECKBOX" onclick="OnClickAutoIncCheckbox(this);" />
+								<label for="AUTOINCBUILDNR_CHECKBOX" accesskey="I"
+									title="DDKBUILD.CMD offers so-called 'build scripts'. These can be used to perform certain automatic steps. Build scripts are required to increase the build number everytime you build the project."
+								>Auto-<u>i</u>ncrement build number</label>
+							</div>
+
+							<div id="BUILDSCRIPTS_CHECKBOX_LBL">
+								<input type="checkbox" id="BUILDSCRIPTS_CHECKBOX"" />
+								<label for="BUILDSCRIPTS_CHECKBOX" accesskey="O"
+									title="DDKBUILD.CMD offers so-called 'build scripts'. These can be used to perform certain automatic steps. Required for the previous option."
+								>Create pre/p<u>o</u>st build scripts</label>
+							</div>
+
+							<div id="MAKEFILEINC_CHECKBOX_LBL">
+								<input type="checkbox" id="MAKEFILEINC_CHECKBOX" />
+								<label for="MAKEFILEINC_CHECKBOX" accesskey="K"
+									title="If you want to take full control of the build process, this option allows you to create a file which gets automatically included by the central make file of the DDK/WDK."
+								>Create <tt>ma<u>k</u>efile.inc</tt></label>
+							</div>
+
+							<div id="MESSAGEFILE_CHECKBOX_LBL">
+								<input type="checkbox" id="MESSAGEFILE_CHECKBOX" />
+								<label for="MESSAGEFILE_CHECKBOX" accesskey="M"
+									title="Any PE-file can contain a so-called message table that can be used by the FormatMessage Win32-API and the eventlog viewer to extract messages that describe a particular status. Read about the message compiler (MC) in the DDK/WDK or in the Platform SDK."
+								>Create <u>m</u>essage file (<tt>.mc</tt>)</label>
+							</div>
+						</td>
+						<!-- SECOND COLUMN -->
+						<td width="50%" class="twocolumnstyle">
+							<div>
+								<input type="checkbox" id="PROPERTYSHEET_CHECKBOX" onclick="PropertySheetCheckbox(this);" />
+								<label for="PROPERTYSHEET_CHECKBOX" accesskey="P"
+									title="This is a very useful option that was introduced with Visual Studio 2005 (and is therefore only available in this version of VS). It allows you to set options for the different build tools, as well as so-called 'user macros' which can also be set as environment variables."
+								>Use <u>p</u>roperty sheet<span id="VS_2005_COMPAT" style="display:none; color:red; font-weight:bold;"> (Only VS 2005 and better!)</span></label>
+							</div>
+							<div style="width:100%; border:1px solid gray; margin-top:2pt; margin-bottom:2pt;">
+								<div style="bottom-margin:1em;">
+									<input type="checkbox" id="OVERRIDEDDKBUILD_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
+									<label for="OVERRIDEDDKBUILD_CHECKBOX" accesskey="U"
+										title="This option allows you to override the path to the DDKBUILD script that you want to use. Please note, that, if the PATH variable contains the path to the directory where the DDKBUILD script resides, you don't have to give the fully qualified path to the script, but only the file name."
+									>Override (full) DDKB<u>U</u>ILD path:</label><br />
+									<input type="text" id="OVERRIDEDDKBUILD_TEXT" style="width:95%; margin-left:0.5em;" />
+								</div>
+								<div>
+									<input type="checkbox" id="OVERRIDEW2KBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
+									<label for="OVERRIDEW2KBASE_CHECKBOX" accesskey="2"
+										title="Allows you to override the W2KBASE environment variable that is used to determine the base path of the Windows 2000 DDK(s)."
+									>Override <tt>W<u>2</u>KBASE</tt> (Windows 2000 DDK):</label><br />
+									<input type="text" id="OVERRIDEW2KBASE_TEXT" style="width:95%; margin-left:0.5em;" />
+								</div>
+								<div>
+									<input type="checkbox" id="OVERRIDEWXPBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
+									<label for="OVERRIDEWXPBASE_CHECKBOX" accesskey="X"
+										title="Allows you to override the WXPBASE environment variable that is used to determine the base path of the Windows XP DDK(s)."
+									>Override <tt>W<u>X</u>PBASE</tt> (Windows XP DDK):</label><br />
+									<input type="text" id="OVERRIDEWXPBASE_TEXT" style="width:95%; margin-left:0.5em;" />
+								</div>
+								<div>
+									<input type="checkbox" id="OVERRIDEWNETBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
+									<label for="OVERRIDEWNETBASE_CHECKBOX" accesskey="N"
+										title="Allows you to override the WNETBASE environment variable that is used to determine the base path of the Windows 2003 Server DDK(s)."
+									>Override <tt>W<u>N</u>ETBASE</tt> (Windows 2003 DDK):</label><br />
+									<input type="text" id="OVERRIDEWNETBASE_TEXT" style="width:95%; margin-left:0.5em;" />
+								</div>
+								<div>
+									<input type="checkbox" id="OVERRIDEWLHBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
+									<label for="OVERRIDEWLHBASE_CHECKBOX" accesskey="L"
+										title="Allows you to override the WLHBASE environment variable that is used to determine the base path of the Windows Vista or Longhorn WDK(s)."
+									>Override <tt>W<u>L</u>HBASE</tt> (Longhorn/Vista WDK):</label><br />
+									<input type="text" id="OVERRIDEWLHBASE_TEXT" style="width:95%; margin-left:0.5em;" />
+								</div>
+							</div>
+							<div>&copy; 2006-2007 by <b>Oliver Schneider</b><br />
+							Please visit my homepage: <a href="http://assarbad.net" onclick="OnClickLink(this);" target="_blank">http://assarbad.net</a></div>
+						</td>
+					</tr>
+					</table>
+					<!--CLOSE OF CONTENT//-->
+				</td>
+			</tr>
+			<tr valign="bottom" style="position:absolute; height:40px; bottom:0px; width:100%;">
+				<td style="padding-top:1em; text-align:right;" class="topline">
+					<!--OPEN OF BUTTON HTML//-->
+					<button class="buttons" id="FinishBtn" accesskey="F" onClick="if(!IsEmptyDDKs()) {SetSymbolDDKs(); OnFinish(document);} else {window.alert('Sorry, but you chose no DDK for which to create projects. Cannot continue!');}" title="If you did everything correctly, clicking this button will create the project with the settings you chose."><u>F</u>inish</button>
+					<button class="buttons" id="CancelBtn" accesskey="C" onClick="window.external.Finish(document, 'cancel');" title="This will cancel the creation of a project."><u>C</u>ancel</button>
+					<!--CLOSE OF BUTTON HTML//-->
+				</td>
+			</tr>
+			</table>
+			<!--CLOSE OF NAVIGATION, CONTENT, AND BUTTON TABLES//-->
+		</td>
+	</tr>
+	</table>
+
+<script language="jscript" type="text/javascript">
+function GetParentDir_(strDir)
+{
+	return strDir.substr(0, strDir.lastIndexOf("\\"));
+}
+
+function GetInstallFilePath_()
+{
+	var strPath = document.URL;
+	strPath = strPath.substr(0, strPath.lastIndexOf("\\"));
+	return GetParentDir_(GetParentDir_(GetParentDir_(GetParentDir_(strPath))));
+}
+
+function InitDocument(document)
+{
+	try
+	{
+		setDirection();
+	}
+	catch(e)
+	{
+	}
+
+	if (window.external.FindSymbol('DOCUMENT_FIRST_LOAD'))
+	{
+		// This function sets the default symbols based
+		// on the values specified in the SYMBOL tags above
+		//
+		window.external.SetDefaults(document);
+	}
+
+	// Load the document and initialize the controls
+	// with the appropriate symbol values
+	//
+	window.external.Load(document);
+
+	// Extract version number of VS/VC (or whatever we are running on)
+	var sVersion = window.external.dte.Version;
+	var iVersion = 1;
+	iVersion *= sVersion.substr(0, sVersion.indexOf(".")); // as a number
+
+	// Override the defaults
+	try
+	{
+		DDKWizard_OverrideDefaults(iVersion, GetInstallFilePath_());
+	}
+	catch(e)
+	{
+		window.alert("Could not fetch default settings from INI file: " + e.description);
+	}
+
+	// Check for minimum version to support property sheets
+	if(iVersion < 8)
+	{
+		var elem = document.getElementById('VS_2005_COMPAT');
+		elem.style.display = "inline";
+		// Property sheets only work on version 8 and later for now
+		// TODO: possibly adapt to later versions
+		elem = document.getElementById('PROPERTYSHEET_CHECKBOX');
+		elem.checked = false;
+		elem.disabled = true;
+		PropertySheetCheckbox(elem);
+	}
+	Bitness64Checkboxes();
+	PrefastCheckboxes();
+	if(window.external.FindSymbol('WIZARD_NAME') == "EmptyDrv")
+	{
+		EnDisAbleAllOverrideCheckboxes();
+		HideSuperfluousControls();
+	}
+	else
+	{
+		EnDisAbleAllOverrideCheckboxes();
+		OnClickAutoIncCheckbox(document.getElementById('AUTOINCBUILDNR_CHECKBOX'));
+	}
+	document.getElementById('subhead').innerHTML = "This wizard creates a <span style='color:#006000; font-weight:bold;'>" + window.external.FindSymbol('WIZARD_NAME') + "</span> project for DDKBUILD (from <a href=\"http://www.osronline.com/article.cfm?article=43\" onclick=\"OnClickLink(this);\" target=\"_blank\">OSR</a>) and the specified DDK";
+	document.getElementById('SUBHEAD_IMAGE').src = "../../Images/" + window.external.FindSymbol('WIZARD_NAME') + ".gif";
+	window.dialogArguments = ""
+}
+
+// If the wizard has more than 1 page, this
+// function will browse to the page specified
+//
+function Next(document, linkto)
+{
+	window.external.Next(document, linkto);
+}
+
+// This is an example of a function which
+// gets called when the user clicks on 'Finish'
+//
+function OnFinish(document)
+{
+	OnWizFinish(document);
+}
+
+</script>
+<script id="INCLUDE_SCRIPT" language="jscript" type="text/javascript"></script>
+<script id="INCLUDE_COMMON" language="jscript" type="text/javascript"></script>
+<script id="INCLUDE_DDKWIZARD" language="jscript" type="text/javascript"></script>
+<!--
+Common.js is a script file which contains the helper functions
+used by the wizards.  Include this line if you want to
+call these functions from your html scripts.
+//-->
+<script language="jscript" type="text/javascript">
+	var strPath = window.external.FindSymbol("PRODUCT_INSTALLATION_DIR");
+	strPath += "VCWizards/";
+//	var strDDKWizScript = strPath + "/DDKWizard/DDKWizIniFile.js";
+	strPath += window.external.GetHostLocale();
+	var strScriptPath = strPath + "/Script.js";
+	var strCommonPath = strPath + "/Common.js";
+	document.scripts("INCLUDE_SCRIPT").src = strScriptPath;
+	document.scripts("INCLUDE_COMMON").src = strCommonPath;
+	// Path to our own script
+	document.scripts("INCLUDE_DDKWIZARD").src = GetInstallFilePath_()+"\\DDKWizIniFile.js";
+</script>
+</body>
+</html>

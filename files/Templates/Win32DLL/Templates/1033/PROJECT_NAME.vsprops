@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Custom Environment Variables"
+	>
+[!if OVERRIDEDDKBUILD_CHECKBOX]
+	<UserMacro
+		Name="DDKBUILD_PATH"
+		Value="[!output OVERRIDEDDKBUILD_TEXT]"
+		PerformEnvironmentSet="true"
+	/>
+[!else]
+	<UserMacro
+		Name="DDKBUILD_PATH"
+		Value="[!output DDKBUILD_COMBOBOX]"
+		PerformEnvironmentSet="true"
+	/>
+[!endif]
+[!if OVERRIDEW2KBASE_CHECKBOX]
+	<UserMacro
+		Name="W2KBASE"
+		Value="[!output OVERRIDEW2KBASE_TEXT]"
+		PerformEnvironmentSet="true"
+	/>
+[!endif]
+[!if OVERRIDEWXPBASE_CHECKBOX]
+	<UserMacro
+		Name="WXPBASE"
+		Value="[!output OVERRIDEWXPBASE_TEXT]"
+		PerformEnvironmentSet="true"
+	/>
+[!endif]
+[!if OVERRIDEWNETBASE_CHECKBOX]
+	<UserMacro
+		Name="WNETBASE"
+		Value="[!output OVERRIDEWNETBASE_TEXT]"
+		PerformEnvironmentSet="true"
+	/>
+[!endif]
+[!if OVERRIDEWLHBASE_CHECKBOX]
+	<UserMacro
+		Name="WLHBASE"
+		Value="[!output OVERRIDEWLHBASE_TEXT]"
+		PerformEnvironmentSet="true"
+	/>
+[!endif]
+</VisualStudioPropertySheet>

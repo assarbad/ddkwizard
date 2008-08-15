@@ -1,0 +1,5 @@
+Driver.vsz| |Driver|1|Creates an ordinary driver project using DDKBUILD and the specified DDK.| |6777| |Driver
+NativeApp.vsz| |Native Application|1|Creates a project that will build an application without subsystem (native application).| |6777| |NativeApp
+Win32CUI.vsz| |Win32 CUI Application|1|Creates a project that will build a CUI application for Win32.| |6777| |ConsoleApp
+Win32DLL.vsz| |Win32 DLL|1|Creates a project that will build a Win32 DLL.| |6777| |DLLProject
+EmptyDrv.vsz| |Empty driver|1|Creates an empty driver project using DDKBUILD and the specified DDK.| |6777| |EmptyDriver

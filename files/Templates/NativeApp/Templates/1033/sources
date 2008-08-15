@@ -1,0 +1,39 @@
+# $Id$
+TARGETNAME=[!output PROJECT_NAME]
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+USE_NTDLL=1
+UMTYPE=nt
+LDEFINE=NODEFAULTLIB
+
+[!if MAKEFILEINC_CHECKBOX]
+# Use additional include file
+NTTARGETFILES=makefile.inc
+[!endif]
+
+# Create browse info
+#BROWSER_INFO=1
+#BROWSERFILE=<some path>
+
+# Additional defines for the C/C++ preprocessor
+C_DEFINES=$(C_DEFINES)
+
+# If you uncomment the following line, the linker will not use buffer overflow
+# checking for the entry point and so on. Leave it commented if possible.
+#BUFFER_OVERFLOW_CHECKS=0
+
+INCLUDES=$(DDK_INC_PATH);$(CRT_INC_PATH);$(SDK_INC_PATH);$(IFSKIT_INC)
+
+TARGETLIBS=$(DDK_LIB_PATH)\nt.lib $(DDK_LIB_PATH)\ntdll.lib
+
+SOURCES=[!output PROJECT_FILENAME].cpp \
+[!if STRICTERCPP_CHECKBOX]
+        NtStartup.cpp \
+[!else]
+        NtStartup.c \
+[!endif]
+[!if MESSAGEFILE_CHECKBOX]
+        msg_[!output PROJECT_NAME].mc \
+[!endif]
+        exeversion.rc

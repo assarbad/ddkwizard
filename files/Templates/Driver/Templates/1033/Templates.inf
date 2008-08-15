@@ -1,0 +1,16 @@
+BUILD
+buildinc.cmd
+buildnumber.h
+ddkbldenv.cmd
+ddkpostbld.cmd
+ddkprebld.cmd
+PROJECT_NAME.c
+PROJECT_NAME.h
+drvcommon.h
+drvversion.h
+drvversion.rc
+makefile
+makefile.inc
+msg_PROJECT_NAME.mc
+sources
+PROJECT_NAME.vsprops

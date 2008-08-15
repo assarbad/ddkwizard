@@ -1,0 +1,6 @@
+ddkbldenv.cmd
+ddkpostbld.cmd
+ddkprebld.cmd
+makefile
+sources
+PROJECT_NAME.vsprops
