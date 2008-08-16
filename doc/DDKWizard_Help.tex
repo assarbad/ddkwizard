@@ -55,7 +55,7 @@
 \newcommand{\optiondeco}[1]{#1\vspace{0.1cm}}
 \newcommand{\inioption}[1]{\\\textcolor[rgb]{0.00,0.00,0.40}{\textsl{Value name:} \texttt{#1}}}
 \def\ddkwiz{D\kern-.09em D\kern-.09em K\kern-.20em \raise-.20ex\hbox{W}\kern-.15em\raise.20ex\hbox{\it{i}}\kern-.02em{zard}}
-\newcommand{\ddkwizver}[0]{\ddkwiz{} v1.2.0a}
+\newcommand{\ddkwizver}[0]{\ddkwiz{} v1.2.1}
 \newcommand{\prefast}[0]{\textsf{PRE\textsl{f}ast}}
 \newcommand{\solcfg}[2]{\texttt{#1 free} and \texttt{#1 checked}:\\#2}
 \newcommand{\solcfgsixfour}[2]{\texttt{#1 free} and \texttt{#1 checked} \textcolor[gray]{0.40}{\textsf{\small(only if 64bit support was activated)}}:\\#2}
@@ -88,7 +88,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Title page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\pdfbookmark[0]{Front page}{Titlepage}
+\pdfbookmark[0]{Title page}{Title page}
 \begin{titlepage}
 \begin{center}
 \large \ddkwizver{} Manual\\
@@ -96,16 +96,20 @@
 \textbf{\huge{How to use \ddkwiz{}}}
 \vskip 2cm
 \begin{itemize}
+\item{\large{License}}
 \item{\large{Setup of \texttt{DDKBUILD}}}
 \item{\large{Usage of the wizard}}
 \item{\large{Configuration of the wizard}}
 \item{\large{Tech-speak ...}}
+\item{\large{Creating custom project templates}}
 \item{\large{Frequently Asked Questions (FAQ)}}
 \item{\large{Deutsche Informationen}}
+\item{\large{Figures}}
+\item{\large{Deutsche Informationen}}
 \end{itemize}
-\vskip 2.5cm
+\vskip 1.5cm
 \textsf{{\emph{\textcolor[gray]{0.75}{May the source be with you, stranger ... ;-)}}}\\}
-\vskip 3.25cm
+\vskip 2.25cm
 \textsc{Created:} \isodate\today\\
 \textsc{Author:} \href{http://assarbad.net/en/contact}{Oliver Schneider}\\
 \vskip 0.7cm
@@ -123,26 +127,28 @@ the benefit of the trademark owner.}}
 %% /Title page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter*{Preface\markboth{Preface}{}}\thispagestyle{fancy}
+\addcontentsline{toc}{chapter}{\numberline{}Preface}
 \ddkwiz{} was written \textbf{because I can be very lazy}, plain and simple!\\
 
 It is a laziness that is so irrational if you think about it twice.
 Programmers tend to spend hours to solve a problem \emph{generically}\texttrademark{}
 instead of solving it specifically and tailored to the specific problem within a few
-minutes (but potentially over and over again).\\
+minutes (but potentially over and over again with only slight changes).\\
 
 When I started using OSRs \texttt{DDKBUILD.BAT} script\footnote{Which was a traditional batch script.}
 I soon thought I could rewrite it to make use of all these neat tricks
 that are allowed by the NT script interpreter\footnote{The NT script interpreter
-goes indeed far beyond what batch provides!}. You can just download the original
-version (\texttt{.bat}) as well as the rewritten one (\texttt{.cmd}) from
-\extlink{http://www.osronline.com/article.cfm?article=43}{OSR Online}\footnote{You need to be logged on to download the files.}
+goes indeed far beyond what batch provides!} and also add some additional features.
+You can just download the original version (\texttt{.bat}) as well as the rewritten
+one (\texttt{.cmd}) from \extlink{http://www.osronline.com/article.cfm?article=43}{OSR
+Online}\footnote{You need to be logged on to download the files.}
 or from the \ddkwiz{} website at \extlinktt{http://ddkwizard.assarbad.net}{ddkwizard.assarbad.net}.
 Soon, however, the need for generic \texttt{DDKBUILD} project creation became ``overwhelming'' ...\\
 
 As a side-note: There is another\footnote{... as far as I know the continuation of
 the very first \texttt{DDKBUILD} script.} \texttt{DDKBUILD} script from Mark Roddy at
 \extlinktt{http://www.hollistech.com}{www.hollistech.com}
-that does the same as the two scripts from OSR. However, I did not take the time
+that does mostly the same as the two scripts from OSR. However, I did not take the time
 to check the compatibility issues that may arise from usage of \ddkwiz{} together
 with this \texttt{DDKBUILD} ``flavor''. If someone ever does it, please let me know
 and I will probably modify \ddkwiz{} to incorporate the necessary
@@ -150,25 +156,29 @@ settings. Currently it relies on the fact that the batch and the NT script
 versions from OSR take the same arguments, so using it with ``the other''
 \texttt{DDKBUILD} is not recommended, but of course you can try it if you are curious.
 
-\section*{Compatibility} \ddkwiz{} works with the DDKs of
+\section*{Compatibility}
+\addcontentsline{toc}{section}{\numberline{}Compatibility}
+\ddkwiz{} works with the DDKs of
 Windows 2000, Windows XP, Windows 2003 Server and newer WDKs (Windows Driver Kits).
 It does not include any configurations for WDF projects and may never include
 them in future. I'll just wait for feedback before deciding about it.\\
 It is compatible with Visual Studio .NET, Visual Studio .NET 2003, Visual Studio 2005,
-Visual Studio 2008 and the express editions of Visual C++ 2005 and 2008. The ``normal''
+Visual Studio 2008 and the Express Editions of Visual C++ 2005 and 2008. The ``normal''
 Visual C++ versions are supposed to work fine as well. Refer to \autoref{sec:propsheets}
 and \autoref{compat:activex} for some possible limitations depending
 on your Visual Studio version.\\
 Visual Studio 2005 and 2008 (and its flavors) support all \ddkwiz{} features!
 
 \section*{Prerequisites}
+\addcontentsline{toc}{section}{\numberline{}Prerequisites}
 \begin{description}
   \item[\texttt{DDKBUILD}:] First of all you need to set up your copy of \texttt{DDKBUILD} according to the version
-that you downloaded. It may sound strange (and ``selfish''), but I recommend to
+that you downloaded. It may sound strange (and ``narcistic''), but I recommend to
 use the NT script (\texttt{.cmd}) version since it provides extra functionality
 (see \autoref{subsec:buildscripts})
 which can be handy sometimes. Setup of the batch version is explained in \autoref{sec:batchversion},
-while the NT script version is explained in \autoref{sec:ntscriptversion}.
+while the NT script version is explained in \autoref{sec:ntscriptversion}. Both
+require roughly the same steps.
   \item[Laziness:]
   You need to be extraordinarily lazy\footnote{And for those who didn't get it just yet - yes, this is a joke.}
   to even install this wizard! If you are not lazy enough, that is below 7 on a laziness scale from 1 to 10, you
@@ -180,6 +190,7 @@ this form of laziness in exchange for the increased productivity \textsf{;-)}.}
 \end{description}
 
 \section*{How to use this manual}
+\addcontentsline{toc}{section}{\numberline{}How to use this manual}
 If you are viewing this document in a PDF viewer, you can take advantage of the
 clickable elements such as links to external websites and links between
 chapters and sections - click the chapter, section or footnote numbers to
@@ -188,26 +199,30 @@ this document you can click the items there (not the page numbers, though).
 This should make it easier for you to navigate the document and follow
 back and forward references which occur every now and then --- yet it leaves
 the document in a state where it can be printed out conveniently.\\
-Kindly note that I use the terms WDK and DDK interchangeably. Unless I want to
-refer to a specific version, I try to stick to the traditional term DDK.
+Kindly note that I use the terms WDK and DDK interchangeably, but unless I
+want to refer to a specific version, I try to stick to the traditional term
+DDK.
 
 \section*{Do you like \ddkwiz{}? Donations \& contributions}
+\addcontentsline{toc}{section}{\numberline{}Donations \& contributions}
 If you like \ddkwiz{}, please consider donating to any charity organization you
-like and trust. But don't feel forced, I wrote
-it primarily to satisfy my own laziness and the laziness of others \textsf{;-)}.\\
+like and trust. But don't feel forced, I wrote it primarily to satisfy my own
+laziness and the laziness of others \textsf{;-)}.\\
 
 Also, you will certainly help a lot by providing feedback about possible bugs,
 feature requests and of course praise. \important{Contributions (new templates,
 better source files in existing templates) are \emph{very} welcome.}
 
 \section*{Website}
+\addcontentsline{toc}{section}{\numberline{}Website}
 The website of \ddkwiz{} is at \extlinktt{http://ddkwizard.assarbad.net}{ddkwizard.assarbad.net}.
 There you will find this documentation for download as well as the latest
 version of the templates and their installer.
 
 \section*{An advice}
-Nah, of course this is not ``adware''. I'd just like to point out how much
-I liked the two seminars with Mark from OSR and send some greetings to
+\addcontentsline{toc}{section}{\numberline{}An advice}
+I'd just like to point out how much I liked the two seminars with Mark from
+OSR and send some greetings to
 him and the other guys over at OSR. I like the published books, the mailing
 lists, \emph{The NT Insider} and their commitment to the NT driver community!
 If you have to work with drivers professionally you \emph{have} to take at least
@@ -217,10 +232,11 @@ questions \textsf{;-)}} - \textbf{you have to!}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LICENSE TEXT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter*{License\markboth{License}{}\pdfbookmark[0]{License}{License}}\thispagestyle{fancy}
+\chapter*{License\markboth{License}{}}\thispagestyle{fancy}
+\addcontentsline{toc}{chapter}{\numberline{}License}
 
 The following license applies to all parts of \ddkwiz{}, \emph{except for any actual
-project templates}.\\
+project templates, which are released into the \texttt{PUBLIC DOMAIN} - see below}.
 
 \begin{verbatim}
 Copyright (c) 2006-2008 by Oliver Schneider (assarbad.net)
@@ -247,16 +263,27 @@ the following restrictions:
 The \emph{included} project templates are all in the \texttt{PUBLIC DOMAIN}, but the same
 disclaimer, as stated in the above license, applies:
 
-\begin{verbatim}
+\begin{quote}
 This software is provided 'as-is', without any express or implied warranty. In
 no event will the authors be held liable for any damages arising from the use
 of this software.
-\end{verbatim}
+\end{quote}
 
 Actually the files, once you create a project with \ddkwiz{}, will contain your
-copyright if you configure the values for \texttt{Author} and \texttt{CompanyName}
+copyright if you configured the values for \texttt{Author} and \texttt{CompanyName}
 as described in \autoref{sec:authorandcompany} and you have at least Visual
 Studio 2005.
+
+\section*{Including \ddkwiz{} in computer magazines, etc.}
+\addcontentsline{toc}{section}{\numberline{}Redistributing DDKWizard}
+Apart from above license and disclaimers, there are no restrictions if you intend
+to include \ddkwiz{} on software collections or distributing it with computer
+magazines. If you include it in computer magazines I would like to hear from
+you and if you would send me an author's copy, but it is \emph{not required}.\\
+Along with this I should mention that you are of course allowed to redistribute
+\ddkwiz{} on your websites as well. If you redistribute \ddkwiz{} on your
+websites, please contact me if you are interested in serving always the latest
+version.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% CHAPTER 1
@@ -275,9 +302,9 @@ few steps:
     choose a directory that can be accessed from anywhere else. Let us say you have
     the DDKs for Windows XP and 2003 installed and they are located in \verb+C:\WINDDK\2600+
     and \verb+C:\WINDDK\3790.1830+ respectively. Now you could copy \texttt{DDKBUILD.BAT}
-    into the common root folder of your DDKs, in our case \verb+C:\WINDDK+.
+    into the common root folder of your DDKs, in your case \verb+C:\WINDDK+.
   \item \label{item:envvar1}
-    Append the path to the directory where \texttt{DDKBUILD.BAT} resides to the \texttt{PATH}
+    Append the path of the directory where \texttt{DDKBUILD.BAT} resides to the \texttt{PATH}
     variable of either your user account or to the system-wide \texttt{PATH} variable. In
     either case right-click \emph{My Computer} and choose \emph{Properties}. Then go to the
     \emph{Advanced} page and click \emph{Environment Variables}. There you can add or edit
@@ -285,19 +312,19 @@ few steps:
     account. Note that the values for the variable are delimited by semi-colons (``\texttt{;}'').
     \autoref{fig:EnvironmentVariables} shows the dialog. Leave the dialog open for
     \autoref{item:envvar2}.\\
-    Leaving out this step will still enable you to use \texttt{DDKBUILD.BAT} from within
-    your IDE but will prevent you from using it conveniently from the command line.
+    \emph{Note:} Leaving out this step will still enable you to use \texttt{DDKBUILD.BAT} from
+    within your IDE but will prevent you from using it conveniently from the command line.
   \item
     Start up your Visual Studio\footnote{Referring to Visual Studio I mean specifically
     Visual C++.} IDE and from the \emph{Tools} menu choose \emph{Options} and in the left
     navigation pane choose the folder \emph{Projects and Solutions} and then \emph{VC++ Directories}.
     From the combobox \emph{Show directories for} choose \emph{Executable files} and add the
     path of the directory where \texttt{DDKBUILD.BAT} resides here as well.
-    \autoref{fig:VisualStudioToolsDialog} shows the dialog.
+    \autoref{fig:VisualStudioOptionsDialog} shows the dialog.
   \item \label{item:envvar2}
     Depending on the DDKs you have installed, you should set the variables\footnote{It is your
     choice whether you set the system-wide variables or those for your user account.} (using
-    the dialog opened before, in \autoref{item:envvar1}) with the following names to point to the
+    the dialog opened before, in point \ref{item:envvar1}) with the following names to point to the
     respective directories\footnote{For the NT4 DDK you can use the \texttt{NT4BASE} variable.
     However, this is not supported by \ddkwiz{}.}:
     \begin{itemize}
@@ -308,25 +335,26 @@ few steps:
         \item
           \textbf{Windows XP DDK:}\\
             For this DDK set the variable \texttt{WXPBASE} to point to the base directory of your
-            Windows XP DDK. For the example in the first point this would be \verb+C:\WINDDK\2600+.
+            Windows XP DDK. A usual location is \verb+C:\WINDDK\2600+.
         \item
           \textbf{Windows 2003 Server DDK:}\\
             For this DDK set the variable \texttt{WNETBASE} to point to the base directory of your
-            Windows 2003 Server DDK. For the example in the first point this would be \verb+C:\WINDDK\3790.1830+
-            (which would be a typical path to the 2003 SP1 DDK).
+            Windows 2003 Server DDK. A usual location is \verb+C:\WINDDK\3790.1830+
+            (for the 2003 SP1 DDK).
         \item
           \textbf{Windows Vista/Windows 2008 Server WDK:}\\
             For this DDK (formerly LDK, now WDK) set the variable \texttt{WLHBASE} to point to the base
             directory of your WDK. The builds 6000 and 6001.18000 are supported at the time of this writing.
     \end{itemize}
-    The \emph{exact} version of the DDK does not matter (i.e. 2003 SP1 DDK counts as 2003 DDK). Note that you
-    can only use one variable setting per user/system. \ddkwiz{} attempts to work around this
-    problem, which will be covered in \autoref{sec:propsheets}. If you are curious which
-    DDK supports which target platforms, take a look into the \hyperref[cha:faq]{FAQ}.
+    The \emph{exact} version of the DDK does not matter (i.e. 2003 SP1 DDK counts as 2003 DDK).
+    Note that you can only use one environment variable setting per user/system. \ddkwiz{}
+    attempts to work around this problem, which will be covered in \autoref{sec:propsheets}.
+    If you are curious which DDK supports which target platforms, take a look into the
+    \hyperref[cha:faq]{FAQ}.
 \end{enumerate}
 \section{\texttt{DDKBUILD.CMD}}
 \label{sec:ntscriptversion}
-To be honest the configuration of \texttt{DDKBUILD.CMD} is just identical to the one of
+To be honest the configuration of \texttt{DDKBUILD.CMD} is almost identical to the one of
 \texttt{DDKBUILD.BAT} (covered in \autoref{sec:batchversion}) except for the name of the file.
 So to spare me the pain in my fingertips after too much typing, just imagine that I
 wrote \texttt{DDKBUILD.CMD} instead of \texttt{DDKBUILD.BAT} and turn to \autoref{sec:batchversion}
@@ -339,9 +367,10 @@ to work properly\footnote{... even with the respective variables cleared.} I dec
 add what I consider a very useful feature in \texttt{DDKBUILD.CMD}: build scripts.\\
 
 Build scripts? That is supposed to be something new? Well, no. Of course it is nothing
-revolutionary enough to be patented. I like it nevertheless.\\If you put the
-following three files into the directory where your \texttt{SOURCES}/\texttt{DIRS} file\footnote{... or
-\texttt{DIRS} file. Only one set of these scripts is allowed per invocation of \texttt{DDKBUILD}.}
+revolutionary enough to be patented. I like it nevertheless and I hope so do you.\\
+
+If you put the following three files into the directory where your \texttt{SOURCES}/\texttt{DIRS}
+file\footnote{Only one set of these scripts is allowed per invocation of \texttt{DDKBUILD}.}
 resides, they will be executed by \texttt{DDKBUILD.CMD} automatically.
 If a file does not exist, the respective feature is being turned off. The files are:
 \begin{itemize}
@@ -350,7 +379,7 @@ If a file does not exist, the respective feature is being turned off. The files 
   \item \texttt{ddkprebld.cmd} for any commands you'd like to execute \underline{before} the \texttt{BUILD}
   utility of the used DDK is being called.
   \item \texttt{ddkpostbld.cmd} for any commands you'd like to execute \underline{after} the \texttt{BUILD}
-  utility of the used DDK has been called.
+  utility of the used DDK has been called. One such thing could be code-signing the binaries.
 \end{itemize}
 
 As I said, it is not revolutionary, but since you can now use the variables declared by both
@@ -358,18 +387,20 @@ As I said, it is not revolutionary, but since you can now use the variables decl
 currently only \texttt{DDKBUILD.CMD} supports this, though.} and \texttt{SETENV.BAT}\footnote{... the
 script used by the respective DDK to prepare a proper build environment with all the
 environment variables set ...} you have a wealth of information at your hands that
-you can use to access the files that have been built - or modify header files in advance,
-e.g. to increase the build number of your binary.
+you can use to access the files that have been built - or modify header files in the
+pre-build step, e.g. to increase the build number of your binary.
 
 \subsection{Auto-detection and global variables in \texttt{DDKBUILD.CMD}}
 Version 7.0 of \texttt{DDKBUILD.CMD} and its numerous beta versions and release candidates
 had introduced a dumb auto-detection of the path to the requested DDK. As the DDK is
 defined by the first parameter to \texttt{DDKBUILD} it can start making some good guesses
 as to where it would possibly find the respective DDK. However, this allows only some
-rather dumb guesses. With version 7.1 of \texttt{DDKBUILD.CMD}, I introduced a much enhanced
-version of this auto-detection mechanism. It works like this:
+rather primitive guesses. With version 7.1 of \texttt{DDKBUILD.CMD}, I introduced a much
+enhanced version of this auto-detection mechanism. It works like this:
 \begin{enumerate}
-  \item It detects whether \texttt{reg.exe} is available on the system.
+  \item It detects whether \texttt{reg.exe} is available on the system\footnote{Windows XP
+        and newer seem to have it by default, on Windows 2000 without SP it doesn't seem to
+        exist.}.
   \item Now everything below this point applies only if you have not set the environment
         variable corresponding to the DDK base directory as described in \autoref{sec:batchversion}.
   \item If \texttt{reg.exe} is available, it tries to find the install keys for the
@@ -381,7 +412,7 @@ version of this auto-detection mechanism. It works like this:
   \item If the auto-detection through registry didn't work out, \texttt{DDKBUILD} will fall back
         to the old ``brute-force'' detection method that had already been included before version 7.1.
   \item If neither auto-detection worked, the script will kindly remind you to set the base directory
-        variable and even point out which one to set.
+        variable and even point out which one to set for the build type you want.
 \end{enumerate}
 If you want to make sure to use a particular build of the DDK(s) you installed, make sure to set the
 base directory environment variable corresponding to your DDK. The auto-detection feature is mainly
@@ -400,35 +431,36 @@ whichever DDK you like) in parallel. \texttt{DDKBUILD.CMD} is all about choices 
 
 \chapter{Usage of the wizard}\thispagestyle{fancy}
 \section{Installing the wizard}
-To install \ddkwiz{} you should have Windows, Visual Studio .NET, .NET 2003, 2005 or
-2008\footnote{... only
+To install \ddkwiz{} you should only need Windows 2000 or newer, Visual Studio .NET,
+.NET 2003, 2005 or 2008\footnote{... only
 Visual C++ instead of the full-fledged Visual Studio suite will be enough as well.}
-and a few clicks. Since laziness is one of
-the pillars on which this software was built, the installer is as easy as can be.
+and a few clicks. Since laziness is one of the pillars on which this software was
+built, the installer is as easy as can be.
 If the installer finds Visual Studio to be installed it will install the
 project wizard for the found version(s). As far as I know version 2003 and 2005
-don't always go well together, but the installer is even prepared to handle this case.\\
+don't always go well together, but the installer is even prepared to handle that case.\\
 
 The first page shows the license terms and a disclaimer to which you have to agree
 in order to proceed. The next page lets you choose the location to which the
 main files will be installed (usually \verb+%ProgramFiles%\DDKWizard+). After
 clicking \emph{Next} the installer will either quit with an error if no supported
-Visual Studio installation could be found or show the final page which you can
-close then.\\
+Visual Studio installation could be found or show the final page which offers
+you to edit the configuration file.\\
 
-After these few steps you can start the VS IDE (actually it won't hurt if it
-was already open) and try to create a new project. Depending on the version
+After these few steps you can start the VS IDE (actually it won't even hurt if it
+was already running) and try to create a new project. Depending on the version
 this is either \texttt{Shift+Ctrl+N} (2003) or \texttt{Ctrl+N} (2005 and 2008)
-in the default configuration.
+as the default setting.
 
 You will notice a new folder \emph{DDK Project} in the left pane and you
 can choose the type of project you want to create. As of this writing the
 only supported project types are \emph{Driver}, \emph{NativeApp}, \emph{EmptyDrv}\footnote{This
-is currently the only project type that cannot be build straight after creation.}
-, \emph{Win32CUI} (for \texttt{DDKBUILD} Win32 console projects) and \emph{Win32DLL},
-although I already plan to include maybe two more specific driver types such
-as \emph{Display Mirror Driver} and \emph{FS Driver}. The biggest difference would
-be the contents of the files created for the project.\\
+is currently the only project type that cannot be build straight after creation
+because it creates just a skeleton project.}, \emph{Win32CUI} (for \texttt{DDKBUILD}
+Win32 console projects) and \emph{Win32DLL}, although I already plan to include
+maybe two more specific driver types such as \emph{Display Mirror Driver} and
+\emph{FS Driver}. The biggest difference would be the contents of the files created
+for the project.\\
 
 From the right pane choose the type of project to create and set the name
 of the project and solution as well as the other options at the bottom.\\
@@ -442,20 +474,21 @@ Who needs this anyway?\\
 Okay, even if you choose this option, I am not going to cry, I promise ... \textsf{;)}. To
 uninstall \ddkwiz{} go to the \emph{Control Panel} and from \emph{Add or Remove Programs}
 choose \ddkwiz{} to remove it from your system. The uninstaller should simply
-remove the copied files and quit.
+remove the copied files and quit.\\
 
 \important{Warning: If you ever store any files inside the directories that
-have been created by \ddkwiz{} these files are going to be deleted upon
-uninstallation of \ddkwiz{}. So if you want to keep these files, create a backup
-of them manually \emph{before}!}
+have been created by \ddkwiz{} these files are going to be deleted during
+removal of \ddkwiz{}. So if you want to keep these files, create a backup
+of them manually \emph{beforehand}!}
 
 \section{Wizard project types}
 \label{sec:projtypes}
 As of this writing the wizard for all project types provides the same options,
-except for \emph{EmptyDrv} which provides some less. But these options
-will not be shown anyway.
+except for \emph{EmptyDrv} which ignores a few. But these options will not
+be shown/active anyway.
+
 The configuration is very simple and I am just going through all the
-options and give a brief description for each of them:
+options and will give a brief description for every one of them:
 \begin{itemize}
   \item \optiondeco{\option{Choose the DDKBUILD you want to use} \default{DDKBUILD.CMD}:}\\
   This option allows you to choose between \texttt{DDKBUILD.BAT} (\autoref{sec:batchversion})
@@ -487,7 +520,7 @@ options and give a brief description for each of them:
   This causes the compiler to perform stricter type checking and
   allows to use the syntax of \texttt{C++} (e.g. \texttt{C++}-style
   type-casts\footnote{... which I personally prefer ...}, declare
-  variables just before you use them or create operators to convert
+  variables just before you use them or create typecast operators to convert
   between \texttt{WCHAR*} and \texttt{UNICODE\_STRING}, for example).
   \inioption{checkbox.STRICTERCPP}
   \item \optiondeco{\option{Auto-increment build number} \default{on}:}\\
@@ -503,7 +536,7 @@ options and give a brief description for each of them:
   checked the previous option (``Auto-increment build number'').
   \inioption{checkbox.BUILDSCRIPTS}
   \item \optiondeco{\option{Create \texttt{makefile.inc}} \default{off}:}\\
-  This will just include a makefile.inc into your \texttt{SOURCES} file into which
+  This will just include a m\texttt{akefile.inc} into your \texttt{SOURCES} file into which
   you can place other custom build steps. The respective option in the
   \texttt{SOURCES} file is \texttt{NTTARGETFILES}.
   \inioption{checkbox.MAKEFILEINC}
@@ -558,7 +591,11 @@ options and give a brief description for each of them:
 As you can see the last few \emph{value names} appear in pairs. This is due to the
 fact that you have to check the checkbox in order to override one of the
 text fields in the dialog. So naturally the same holds for the customization
-of \ddkwiz{} through the configuration file.
+of \ddkwiz{} through the configuration file.\\
+
+\emph{Note:} the default paths given in the text fields are \emph{not} the
+values of the environment variables or so. They are just and example of what
+is expected in those fields if you check the respective checkbox.
 
 \section{Projects and configuration created by the wizard}
 \ddkwiz{} creates a project for each DDK you choose in the options. So if
@@ -573,9 +610,11 @@ DDK and the solution will contain a \emph{solution configuration} for each of th
 The \emph{solution configurations} are pre-configured to include only the
 project which is relevant to the current (solution) configuration. Therefore it is
 irrelevant which one of the projects you choose as startup project - the
-important setting is the \emph{solution configuration} that you select.
-The following solution configurations can occur depending on your choice
-of DDKs.
+important setting is the \emph{solution configuration} that you
+select\footnote{Explicitly building the project that is not selected by the
+solution configuration (e.g. through right-click) results in undefined
+behavior. It isn't dangerous, but it is silly \textsf{;)}}. The following
+solution configurations can be created depending on your choice of DDKs.
 
 \begin{itemize}
   \item \solcfg{W2K}{Use the Windows 2000 DDK to build a 32bit driver with Windows 2000 as the target operating system platform.}
@@ -599,20 +638,18 @@ of DDKs.
   \item \solcfgsixfour{WLHX64}{Use the Longhorn/Vista WDK to build a 64bit (AMD64, x64, EM64T) driver with Windows Longhorn/Vista as the target operating system platform.}
 \end{itemize}
 
-As you can see these names follow the naming of the options for \texttt{DDKBUILD} and
-the list of configurations can get quite long. Therefore I recommend to select only
+As you can see these names follow the naming of the target platforms for \texttt{DDKBUILD}
+and the list of configurations can get quite long. Therefore I recommend to select only
 the DDKs which you are definitely going to use.\\
 
 Please note as well that, depending on your selection to create \prefast{} configuration
 clones, one additional configuration will appear per above described configuration
-with the hint ``\prefast{}'' in its name.
-% Depending on the options you chose, a
-% cloned configuration will be created for \prefast{} builds.
+with the hint ``\prefast{}'' appended to its name.
 
 \section{Property sheets (VS 2005 or later)}
 \label{sec:propsheets}
 With Visual Studio 2005 Microsoft introduced a neat feature called \emph{Property Sheets}.
-This is no more than a file which provides default settings for the build tools
+This is no more than an XML file which provides default settings for the build tools
 of a project. The specific feature \ddkwiz{} makes use of is the \emph{Macros}
 setting. There you can set (or \emph{override} global) environment variables for the
 current project. Now that I mentioned it, many of you are already saying ... ``aha
@@ -621,7 +658,7 @@ projects for a DDK which is useful if the DDK is checked into your version contr
 system. I had never before considered version control systems for such a use, but
 I was taught this approach at the \texttt{NTDEV} mailing list.
 
-At least if you use Visual Studio 2005 or later I recommend you let the respective checkbox
+At least if you use Visual Studio 2005 or later I recommend you leave the respective checkbox
 checked to include support for \emph{Property Sheets}. The property sheet that will
 be included in the project is named \texttt{\emph{ProjectName}.vsprops} and contains
 just the declaration of a variable named \texttt{DDKBUILD\_PATH} in the default
@@ -639,9 +676,9 @@ to do so without much effort. The only thing you need to do is going to the
 \emph{View} menu, choosing \emph{Other Windows} and then \emph{Property Manager}
 which provides a convenient way to customize the already-included property sheet.\\
 
-This is the method used by \ddkwiz{} to overcome certain limitations such as
-that only one environment variable per user/system can be declared. Also the
-grouped overriding options work through this method.
+This is the method used by \ddkwiz{} to overcome certain limitations, e.g.
+that only one environment variable per user/system can be declared. The option
+to override the base directory variables also uses this method.
 
 \subsubsection{But I only have Visual C++/Studio .NET/2003?!}
 Worry not. Once again \texttt{DDKBUILD.CMD} comes to the rescue. You can use \texttt{ddkbldenv.cmd}
@@ -650,9 +687,10 @@ similar results.\\
 Also do not underestimate the use of this additional build script. While property sheets
 are a pretty powerful feature, they will only work \emph{inside} Visual Studio.
 \texttt{DDKBUILD} on the other hand will work from the command line or other integrated
-development environments and consequently will build scripts such as \texttt{ddkbldenv.cmd}.\\
+development environments and consequently will make use of the build scripts such as
+\texttt{ddkbldenv.cmd}.\\
 
-Of course, if you use neither a modern Visual C++/Studio nor \texttt{DDKBUILD.CMD}, you are
+Of course, if you use neither a modern Visual C++/Studio \emph{nor} \texttt{DDKBUILD.CMD}, you are
 definitely not going to get far with property sheets or \texttt{ddkbldenv.cmd}. Nothing \emph{I}
 could do about this, though.
 
@@ -670,7 +708,7 @@ type}.
 \label{compat:activex}
 There is a major caveat with this new feature when used with
 Visual Studio .NET and .NET 2003. If your Internet Explorer security zones
-are configured accordingly (the default), you will always get a nasty message box
+are configured accordingly (i.e. the default), you will always get a nasty message box
 warning you of an ActiveX control being run\footnote{The control being run is
 \texttt{Scripting.FileSystemObject} which is required to read the configuration
 file that is the heart of this new feature. So sadly there is no way of
@@ -700,8 +738,8 @@ default in the program files folder
 As you can see, the decision is up to you. I for one would \emph{only} enable it if
 I really need the customization feature and leave it disabled otherwise. Usually
 \ddkwiz{} would not be used on a daily basis, so, while being a major nuisance
-to me as the author, it might be a very minor nuisance to you compared to the utility
-configuration of \ddkwiz{} provides to you.
+to me, it might be a very minor nuisance to you compared to the utility the
+fine-grained configuration of \ddkwiz{} provides to you.
 
 \subsection{Workarounds?!}
 You might want to work around the problem with Visual Studio .NET and .NET 2003
@@ -720,7 +758,7 @@ upgrading/updating it will cause \emph{these} adjustments in \texttt{default.htm
 to be lost (see \autoref{sec:persistentcfg}). So use this method carefully!
 
 \section{The \texttt{INI} file explained}
-In \autoref{sec:projtypes} you will find a comprehensible list of all the options.
+In \autoref{sec:projtypes} you will find a comprehensive list of all options.
 Along with the explanation of every option, you will find its \emph{value name} inside the
 configuration file given.
 
@@ -734,14 +772,14 @@ the configuration file from now on). Here are a few simple hints.
   \item Comment lines start with a semi-colon: ``\verb+;+''. There may be an arbitrary number of blank spaces or tabs before that semi-colon for formatting purposes.
   \item There are no multi-line comments.
   \item The default \texttt{INI} file will give you an overview of all available \emph{value names} and sections.
-  \item Lines with empty values are ignored!
+  \item Lines with empty values are ignored with the sole exception of string values!
 \end{itemize}
 
 \subsection{Special values}
 There are special rules for the values. A value of ``\texttt{default}'' means that
 the respective setting will not be overridden! This also means that text fields or
-user variables can never be set to ``default'' as a result of the customization\footnote{Basically
-the same as for empty values.}.
+user variables can never be set to ``default''\footnote{Effectively yielding the
+same behavior as empty values.}.
 
 \subsection{Value types}
 There are four types of values:
@@ -831,12 +869,17 @@ modified file \textsf{;-)} ... However, the uninstaller \emph{will remove} the w
 directory. So if you intend to install \ddkwiz{} again, please make a manual backup of the
 configuration file in a safe place \emph{before} you start the uninstaller!
 
+\emph{Note:} to upgrade your \ddkwiz{} installation to a newer version, you do
+not have to uninstall the currently installed version. Simply starting the installer
+and installing ``over'' the existing installation will do the trick.
+
 \chapter{Tech-speak ...}\thispagestyle{fancy}
 \section{Custom wizards}
 Frankly speaking the custom wizard created by Visual Studio - if you choose a to create
 a new project of just this type - is horrible. The HTML that is being created is so
 ugly and so far from any standard that I basically replaced all of it except for the
-symbols in the beginning and the JScript parts.
+symbols in the beginning and the JScript parts. Check out \autoref{cha:CreateOwnTemplates}
+to find out more on how to create own custom project templates.
 
 \section{\texttt{./HTML/1033/default.htm}}
 This is the HTML file which is being displayed if you choose to create one of
@@ -847,8 +890,8 @@ Visual Studio IDE and in relation to the other options.\\
 Most symbols are \emph{statically} defined. One which is added
 \emph{dynamically} is \verb+DDK_LISTBOX+ because I found no other way that
 would allow me to provide a multiple choice listbox than to read the selected
-entries once the user clicks \emph{Finish}. The other symbols coincide
-with the options presented in \autoref{sec:projtypes} for each project type.
+entries once the user clicks \emph{Finish}. The other symbols match
+the options presented in \autoref{sec:projtypes} for each project type.
 
 \section{\texttt{./Scripts/1033/default.js}}
 As all programmers do for their spare-time projects, I'll supply the comments
@@ -857,9 +900,11 @@ if I ever find time \textsf{:o)} ...\\
 In fact you will find some comments in the source, already.
 
 \chapter{Creating your own custom project templates (and contribute them)}
+\label{cha:CreateOwnTemplates}
 If you like to create custom project templates, the best starting point is to pick one
 of the existing templates from \ddkwiz{} and modify them. In any case you will have to
 register the new templates with each version of Visual Studio or Visual C++.
+The steps should work for the versions 2003 through 2008.
 
 \section{Registration files}
 For the sake of brevity, I will assume you have Visual Studio 2005 and that it is installed
@@ -900,10 +945,11 @@ as was described in \autoref{sec:templatepath}, you will have to navigate your
 file manager to this location. Otherwise it is now time to create the specified
 path and copy files from the existing \ddkwiz{} template or create new ones.
 
-Into this folder copy any and all files you want to have in the new projects (apart
-from the \texttt{.vsproj} files, of course). There is only one thing to keep in
-mind. Whenever you call the file \verb+PROJECT_NAME.somthing+ it is going to be
-called like the project with the suffix (file extension) ``\texttt{.something}''.
+Into this folder copy any files you want to have in the new projects
+created from your template (apart from \texttt{.vsproj} files, of course).
+There is only one thing to keep in mind. Whenever you call the file
+\verb+PROJECT_NAME.something+ it will be named after the project with
+the suffix (file extension) ``\texttt{.something}''.
 
 Furthermore, text files are subject to some pre-processing when being copied
 into the folder you selected for the project. See the following section.
@@ -928,13 +974,18 @@ Here the list of variables. Please note, that especially the ones starting with
         \verb+DDKWIZ_USERVARIABLE_COMPANY+ and \verb+DDKWIZ_USERVARIABLE_COMPANY_C+\\
         \verb+DDKWIZ_USERVARIABLE_WEBSITE+ and \verb+DDKWIZ_USERVARIABLE_WEBSITE_C+\\
         Values of the respective user variables as defined in the INI file (if
-        you have support for this enabled, i.e. by default not prior to VS 2005).
+        you have support for this enabled, i.e. by default not prior to VS 2005).\\
+        \emph{Note:} the variables whose names end in \verb+_C+ contain a version
+        of the value that can be used in macros and so on. It has certain characters
+        escaped which would otherwise cause unintended behavior.
   \item \verb+OVERRIDEDDKBUILD_TEXT+\\
         Name (and optionally path) to \texttt{DDKBUILD}. Of course this could be
-        just some third-party compatible script.
+        just some third-party script with compatible command line options. It's up
+        to you.
   \item \verb+OVERRIDEW2KBASE_TEXT+, \verb+OVERRIDEWXPBASE_TEXT+, \verb+OVERRIDEWNETBASE_TEXT+ and \verb+OVERRIDEWLHBASE_TEXT+\\
-        I can not imagine where these are useful, but they will only be defined
-        if you use Visual Studio 2005 or later and have support for property sheets.
+        I can not imagine where these would be useful within the source files of a
+        created project, but they will only be defined if you use Visual Studio 2005
+        or later and have support for property sheets.\\
         They are the base directories for the DDKs/WDKs that can be overridden in
         the project creation dialog.
   \item \verb+PROJECT_DATE+ and \verb+PROJECT_YEAR+\\
@@ -948,6 +999,7 @@ Here the list of variables. Please note, that especially the ones starting with
         A prefix that is all uppercase and has been derived from the project name.
         It will not contain any characters which would be unsuitable for function
         or variable names unless your project name starts with a number \textsf{;-)}.
+        Thus they can be used for the named purposes.
 \end{itemize}
 
 \chapter{Frequently Asked Questions (FAQ)}\thispagestyle{fancy}
@@ -979,7 +1031,12 @@ Here the list of variables. Please note, that especially the ones starting with
         and will also be smaller in size.\\
         \emph{Trivia:} the headers in the DDK take the improved standard compliance
         of the DDK compiler into account. Also a nice way to migrate or just
-        recompile old VC6 projects.
+        recompile old VC6 projects.\\
+        \emph{Note:} there is a caveat. Newer DDKs/WDKs set certain fields in the
+        PE header of the built binaries strict enough to make those Windows versions
+        that care refuse loading it. Although this only happens, if the target platform
+        is newer than the operating system on which you run the binary, it can lead
+        to some initial confusion.
   \item \textbf{What the heck is \texttt{CUI}?}\\
         Some people know it as \texttt{CLI} or \emph{Command Line Interface} - I
         personally prefer \texttt{CUI} or \emph{Console User Interface} as opposed
@@ -993,18 +1050,21 @@ Here the list of variables. Please note, that especially the ones starting with
         like long file names and appear to get confused occasionally. \texttt{DDKBUILD.CMD}
         addresses this issue with version 7.0RC2 and later. If all fails, you might want to
         consider contacting me \textsf{;-)}.
-  \item \textbf{What DDK (WDK) should I use?}\\
+  \item \addcontentsline{toc}{section}{\numberline{}What DDK to use}
+        \textbf{What DDK (WDK) should I use?}\\
         In general I would recommend you use the latest available DDK, if possible. However,
         there are a few limitations. Let us consider your target platform is NT 4.0, your
-        only choice for a DDK which supports it officially, would be the NT4 DDK. However,
-        it is well possible to build drivers compatible with Windows NT 4.0 using a newer
-        DDK and setting Windows 2000 as the target platform.\\
+        only choice for a DDK which supports it \emph{officially}, would be the NT4 DDK.
+        It is well possible to build drivers compatible with Windows NT 4.0 using a newer
+        DDK and setting Windows 2000 as the target platform while being careful about
+        the kernel functions being used.\\
         Furthermore, all DDKs up to and including the Windows 2000 DDK, where dependent
-        on an external driver. The Windows XP DDK was the first to address this issue.
-        Neither \ddkwiz{} nor \texttt{DDKBUILD} offer any ways to make this part easier.
+        on an external compiler and linker. The Windows XP DDK was the first to address
+        this issue. Neither \ddkwiz{} nor \texttt{DDKBUILD} offer any ways to make this
+        part easier.
         In fact the NT4 DDK is deprecated for the newest \texttt{DDKBUILD} and was never
-        supported by \ddkwiz{}.\\
-        Here is a list of targets supported by the DDKs along with the base directory
+        supported by \ddkwiz{} anyway.\\
+        Here is a list of targets supported \emph{by the DDKs} along with the base directory
         environment variable as described in \autoref{sec:batchversion}:
         \begin{itemize}
           \item
@@ -1012,7 +1072,7 @@ Here the list of variables. Please note, that especially the ones starting with
             This DDK requires an external compiler and linker. It can be used to compile
             drivers targeted at the Windows NT 4.0 platform. As far as I am aware,
             support for all processor platforms that were officially supported by
-            Windows NT 4.0 was included.
+            Windows NT 4.0 was included (e.g. PPC, Alpha ...).
           \item
             \textbf{Windows 2000 DDK} (\texttt{W2KBASE})\\
             This DDK requires an external compiler and linker. It can be used to compile
@@ -1029,14 +1089,14 @@ Here the list of variables. Please note, that especially the ones starting with
             \textbf{Windows 2003 Server DDK} (\texttt{WNETBASE})\\
             This DDK can be used to compile drivers targeted at the Windows 2000 platform
             but only on x86 as well as drivers for Windows XP (x86, x64 and IA-64)
-            and Windows 2003 Server (x86, x64 and IA-64).
+            and Windows 2003 Server (x86, x64 and IA-64).\\
             \underline{Note:} Use the x64 configuration type for Windows 2003 Server to
             build a driver compatible with Windows XP x64.
           \item
             \textbf{Windows Vista/Windows 2008 Server WDK} (\texttt{WLHBASE})\\
             With this DDK (formerly ``Longhorn Driver Kit'', now ``Windows Driver Kit'')
             you can target almost all of the previously mentioned platforms. Support for
-            Windows 2000 does not include IA-64 (``Itanium'').
+            Windows 2000 does not include IA-64 (``Itanium'').\\
             \underline{Note:} Use the x64 configuration type for Windows 2003 Server to
             build a driver compatible with Windows XP x64.
 
@@ -1047,13 +1107,14 @@ Here the list of variables. Please note, that especially the ones starting with
 \end{itemize}
 
 \section{Important change in version 1.1.1b}
-In previous versions, \ddkwiz{}-created projects contained a bug. This bug \emph{could}
-cause a BSOD in the worst case. To make a long story short, I returned a value using
-the dereferenced pointer from a completed IRP. Not good \textsf{;-)} ... this is fixed.
+In previous versions (i.e. prior to 1.1.1b), projects created by \ddkwiz{} contained
+a bug. This bug \emph{could} cause a BSOD in the worst case. To make a long story short,
+I returned a value using the dereferenced pointer from a completed IRP. Not good \textsf{;-)}
+... this is fixed.
 
-Please note that you have to fix the issue by yourself for older projects created
-with \ddkwiz{}. To do this, check all the dispatch functions of your driver for the
-following line:
+Please note that you have to fix the issue manually by yourself for older projects created
+with affected \ddkwiz{} versions. To do this, check all the dispatch functions of your driver
+for the following line:
 
 \begin{verbatim}
     return Irp->IoStatus.Status;
@@ -1073,13 +1134,15 @@ IRP. So the correct version would look something like this:
 Other variants are of course possible, but you get the point.
 
 \section{Build script use cases}
-In \autoref{subsec:buildscripts}, I introduced you to the build scripts that can be used by
+In \autoref{subsec:buildscripts}, I introduced you to the build scripts that can be used with
 \texttt{DDKBUILD.CMD}. Now let us discuss some use cases.
 
 \textbf{\texttt{ddkbldenv.cmd}} should be used to override any of the base directory variables, but
 in fact you could even override some \texttt{DDKBUILD}-internal variables. I cannot recommend
 this, though, since I may change the logic in the main script one day and your \texttt{ddkbldenv.cmd}
-could break in that case. Example (overrides \texttt{WLHBASE}):
+could break in that case.\\
+
+Example (overrides \texttt{WLHBASE}):
 
 \begin{verbatim}
 @echo off
@@ -1087,7 +1150,7 @@ set WLHBASE=X:\WINDDK\6000
 \end{verbatim}
 
 \textbf{\texttt{ddkprebld.cmd}} is being called just before the actual call to the \texttt{BUILD}
-utility of the DDK. Therefore you can inject any kind of actions that you need to be done at this
+utility of the DDK. Therefore you can inject any kind of actions that you need to have done at this
 point. If it doesn't matter whether at this point or earlier you \emph{may choose between} this script
 and \texttt{ddkbldenv.cmd}. Example (sets a variable used in \texttt{SOURCES}):
 
@@ -1097,14 +1160,14 @@ set ENGINEBASE=X:\MyProduct\Engine
 \end{verbatim}
 
 \textbf{\texttt{ddkpostbld.cmd}} could be used for any step after the build has finished. Typical
-tasks at this stage would be to move the binary files to some other location, to sign
-them or to perform other actions on them.
+tasks at this stage would be to move the binary files to some other location, to code-sign
+them or to perform other actions involving them.
 
 \chapter{Deutsche Informationen}\thispagestyle{fancy}
 Wie unter \ref{sec:batchversion} schon erw\"ahnt, m\"ussen f\"ur \texttt{DDKBUILD}
 unter Umst\"anden noch Einstellungen in Visual Studio vorgenommen werden. Deshalb
 hier die deutschen Namen der entsprechenden Men\"upunkte, welche ich ebendort f\"ur
-die englische Version von Visual Studio genannt habe.
+die englische Version von Visual Studio genannt hatte.
 
 \begin{description}
   \item[\emph{Tools}] wird zu \emph{Extras}
@@ -1120,12 +1183,14 @@ die englische Version von Visual Studio genannt habe.
 \begin{figure}[h]
     \centering
     \caption{Dialog to set environment variables\label{fig:EnvironmentVariables}}
+    \addcontentsline{toc}{section}{\numberline{}Environment variables}
     \includegraphics[width=0.6\textwidth]{./EnvironmentVars.png}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \caption{The Visual Studio 2005 \emph{Tools} dialog\label{fig:VisualStudioToolsDialog}}
+    \caption{The Visual Studio 2005 \emph{Options} dialog\label{fig:VisualStudioOptionsDialog}}
+    \addcontentsline{toc}{section}{\numberline{}Options dialog}
     \includegraphics[width=\textwidth]{./VS2005_ExeDirs.png}
 \end{figure}
 
