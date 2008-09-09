@@ -1,10 +1,8 @@
-;--------------------------------
-; Include Modern UI
+#############################################################################
+# Include Modern UI
 
   !include "MUI.nsh"
-;  !include "WriteEnvStr.nsh"
-; HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\8.0\ ->
-;--------------------------------
+#############################################################################
   ; Other Defines needed
   !define PRODUCT_NAME "DDKWizard"
   !define AUTHOR_NAME "Oliver Schneider (assarbad.net)"
@@ -23,11 +21,9 @@
   !define SOFTWARE_KEY "SOFTWARE\Microsoft"
   !define TEMPLATES_DIR "TemplatesDir"
   !define TEMPLATES_DIR_KEY "NewProjectTemplates\TemplateDirs\{F1C25864-3097-11D2-A5C5-00C04F7968B4}\/1"
-;  !define PRODUCT_DIR "ProductDir"
-;  !define PRODUCT_DIR_KEY "Setup\VC"
   !define UNINSTALL_EXE "Uninstall.exe"
   !define UNINSTALL_KEY "${SOFTWARE_KEY}\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-; "Dynamic" declarations
+# "Dynamic" declarations
   !define VSNET "VSNET"
   !define VS2003 "VS2003"
   !define VC2003Exp "VC2003Exp"
@@ -70,7 +66,7 @@
   Var sProductKey
   Var sProductName
 
-; General
+# General
   !include "Sections.nsh"
   Name "${PRODUCT_NAME}"
   BrandingText "${PRODUCT_WEBSITE}"
@@ -87,14 +83,14 @@
   ; Default installation folder
   InstallDir "$PROGRAMFILES\${PRODUCT_NAME}"
 
-;--------------------------------
-; Pages
+#############################################################################
+# Pages
 
   !insertmacro MUI_PAGE_LICENSE ".\files\license.txt"
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
 
-; Define some values
+# Define some values
   !define MUI_FINISHPAGE_LINK "Visit the ${PRODUCT_NAME} website"
   !define MUI_FINISHPAGE_LINK_LOCATION "${PRODUCT_WEBSITE}"
   !define MUI_FINISHPAGE_NOREBOOTSUPPORT
@@ -105,19 +101,19 @@
   !define MUI_FINISHPAGE_RUN_PARAMETERS "$\"$INSTDIR\${CONFIG_FILE_NAME}$\""
   !define MUI_FINISHPAGE_RUN_TEXT "Edit DDKWizard configuration file"
   !define MUI_FINISHPAGE_RUN_NOTCHECKED
-; Insert finish page
+# Insert finish page
   !insertmacro MUI_PAGE_FINISH
 
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
 
-;--------------------------------
-;Languages
+#############################################################################
+#Languages
 
   !insertmacro MUI_LANGUAGE "English"
 
-;--------------------------------
-; Version Information
+#############################################################################
+# Version Information
 
   VIProductVersion "${FILE_PRODUCT_VERSION}"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "${PRODUCT_NAME}"
@@ -130,10 +126,8 @@
   VIAddVersionKey /LANG=${LANG_ENGLISH} "OriginalFilename" "${INSTALLER_EXE_NAME}"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "Website" "${PRODUCT_WEBSITE}"
 
-;--------------------------------
-; Installer Sections
-
-;InstType "Full installation"
+#############################################################################
+# Installer Sections
 
 !macro ProductInstall product
   StrCpy $sProductKey "${${product}_PRODUCT_KEY}"
@@ -179,8 +173,8 @@ Section "-Required"
   StrCmp $9 "0" No_Visual_Studio_Found 0
   DetailPrint "Installing common components"
   SetOutPath $INSTDIR\Wizards
-  File /r ${FILES_FOR_SPECIFIC_TEMPLATES_DIR}
-; Copy the wizard files which are not templates
+  File /r /x .svn ${FILES_FOR_SPECIFIC_TEMPLATES_DIR}
+  # Copy the wizard files which are not templates
   StrCpy $0 "$INSTDIR\Wizards\Driver"
   Call CopyScripts
   StrCpy $0 "$INSTDIR\Wizards\NativeApp"
@@ -191,17 +185,17 @@ Section "-Required"
   Call CopyScripts
   StrCpy $0 "$INSTDIR\Wizards\Win32DLL"
   Call CopyScripts
-; Copy the help
+  # Copy the help
   SetOutPath $INSTDIR
   File .\doc\${HELP_FILE_NAME}
   File .\files\${SCRIPT_FILE_NAME}
-; Only overwrite if the user wants it!!!
+  # Only overwrite if the user wants it!!!
   IfFileExists $INSTDIR\${CONFIG_FILE_NAME} 0 Overwrite_Config
   MessageBox MB_YESNO "Do you want to overwrite the existing DDKWizard configuration file?$\nNote: This will undo any customizations you made!$\n$\nOverwrite it?" IDYES 0 IDNO No_Overwrite_Config
 Overwrite_Config:
   File .\files\${CONFIG_FILE_NAME}
 No_Overwrite_Config:
-; Create shortcut to the help on desktop
+  # Create shortcut to the help on desktop
   CreateShortCut "$DESKTOP\${HELP_SHORTCUT_NAME}" "$INSTDIR\${HELP_FILE_NAME}"
   Call CreateUninstallEntry ; Create entry in "Add/Remove Software"
   Goto EndOfInstallSection
@@ -214,11 +208,11 @@ SectionEnd
 
 Function CopyScripts
   SetOutPath $0
-  File /r .\files\Wizard\*
+  File /r /x .svn .\files\Wizard\*
   Delete "$0\Templates\1033\CustomVars.vsprops"
-;  FileOpen $R0 '$0\HTML\1033\Config.ini' w
-;  FileWrite $R0 "[General]$\r$\nInstDir=$INSTDIR$\r$\n" ; Line break
-;  FileClose $R0
+#  FileOpen $R0 '$0\HTML\1033\Config.ini' w
+#  FileWrite $R0 "[General]$\r$\nInstDir=$INSTDIR$\r$\n" ; Line break
+#  FileClose $R0
 FunctionEnd
 
 Function SpecificProductInstall
@@ -228,11 +222,11 @@ Function SpecificProductInstall
   IfErrors 0 +3
   DetailPrint "... not found"
   Goto ExitThis
-;Install:
+#Install:
   DetailPrint "Installing for $sProductName"
   StrCpy $0 '$0\DDK Project'
   SetOutPath $0
-  File /r ${FILES_FROM_INSTALLER_DIR}
+  File /r /x .svn ${FILES_FROM_INSTALLER_DIR}
   StrCpy $1 'Driver'
   Call SpecificProductDispatcher
   StrCpy $1 'NativeApp'
@@ -247,7 +241,7 @@ Function SpecificProductInstall
 ExitThis:
 FunctionEnd
 
-; Dispatcher for each of the specific products ...
+# Dispatcher for each of the specific products ...
 Function SpecificProductDispatcher
   !insertmacro DispatchProduct ${VSNET}
   !insertmacro DispatchProduct ${VS2003}
@@ -259,19 +253,19 @@ Function SpecificProductDispatcher
 ExitThis:
 FunctionEnd
 
-; These macros create the functions responsible to create the .VSZ files
+# These macros create the functions responsible to create the .VSZ files
 !insertmacro MakeCreationFunction ${VSNET}
 !insertmacro MakeCreationFunction ${VS2003}
 !insertmacro MakeCreationFunction ${VS2005}
 !insertmacro MakeCreationFunction ${VS2008}
 
-;--------------------------------
-;Installer Functions
+#############################################################################
+#Installer Functions
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; This function is a callback being called upon initialization. It checks the
-; OS versionon which we run and decides about the available options.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#############################################################################
+# This function is a callback being called upon initialization. It checks the
+# OS versionon which we run and decides about the available options.
+#############################################################################
 Function .onInit
   SetCurInstType 0
 FunctionEnd
@@ -290,10 +284,10 @@ Function CreateUninstallEntry
   WriteRegDWORD     HKCU "${UNINSTALL_KEY}" "NoModify" "1"
   WriteRegDWORD     HKCU "${UNINSTALL_KEY}" "NoRepair" "1"
 FunctionEnd
-; -----------------------------------------------------------------------------
+#############################################################################
 
-;--------------------------------
-;Uninstaller Section
+#############################################################################
+#Uninstaller Section
 
 !macro ProductUninstall product
   StrCpy $sProductKey "${${product}_PRODUCT_KEY}"
@@ -302,7 +296,7 @@ FunctionEnd
 !macroend
 
 Section "Uninstall"
-; Registry stuff has to be removed as well as the uninstaller itself
+# Registry stuff has to be removed as well as the uninstaller itself
   Call un.CreateUninstallEntry
   IntOp $9 0 + 0
   !insertmacro ProductUninstall ${VSNET}
@@ -313,21 +307,21 @@ Section "Uninstall"
   !insertmacro ProductUninstall ${VS2008}
   !insertmacro ProductUninstall ${VC2008Exp}
   StrCmp $9 "0" 0 Common
-; No_Visual_Studio_Found:
+# No_Visual_Studio_Found:
   DetailPrint "Strangely none of the required products was found."
   DetailPrint "Skipped uninstallation of the respective files."
 Common:
   DetailPrint "Removing common components"
-; Delete the files
+# Delete the files
   Delete "$INSTDIR\${HELP_FILE_NAME}"
-; Remove the install directory
+# Remove the install directory
   RMDir /r "$INSTDIR"
-; Remove desktop link
+# Remove desktop link
   Delete "$DESKTOP\${HELP_SHORTCUT_NAME}"
 SectionEnd
 
-;--------------------------------
-;Uninstaller Functions
+#############################################################################
+#Uninstaller Functions
 
 Function un.SpecificProductInstall
   DetailPrint "Removing wizard from $sProductName"
@@ -349,4 +343,4 @@ Function un.CreateUninstallEntry
   Delete "$INSTDIR\${UNINSTALL_EXE}"
   DeleteRegKey HKCU "${UNINSTALL_KEY}"
 FunctionEnd
-; -----------------------------------------------------------------------------
+#############################################################################
