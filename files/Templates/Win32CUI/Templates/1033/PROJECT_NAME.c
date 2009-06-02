@@ -30,19 +30,14 @@
 [!endif]
 #include "[!output PROJECT_NAME].h"
 
-int
-__cdecl
-main(
-	int argc,
-	_TCHAR *argv[]
-	)
+int __cdecl _tmain(int argc, _TCHAR *argv[])
 {
 [!if STRICTERCPP_CHECKBOX]
 	using namespace std;
 
 	cout << "Hello world" << endl;
 [!else]
-	printf("Hello world\n");
+	_tprintf(_T("Hello world\n"));
 [!endif]
 	return 0;
 }

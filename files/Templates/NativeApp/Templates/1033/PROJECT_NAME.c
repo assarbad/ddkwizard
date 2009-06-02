@@ -23,14 +23,7 @@ extern "C" {
 #include "nativehdr.h"
 #include "[!output PROJECT_NAME].h"
 
-NTSTATUS
-__cdecl
-main(
-	int argc,
-	char *argv[],
-	char *envp[],
-	ULONG DebugParameter OPTIONAL
-	)
+NTSTATUS __cdecl main(int argc, char *argv[], char *envp[], ULONG DebugParameter OPTIONAL)
 {
 	return STATUS_SUCCESS;
 }
