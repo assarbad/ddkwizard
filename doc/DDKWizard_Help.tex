@@ -161,11 +161,11 @@ Windows 2000, Windows XP, Windows 2003 Server and newer WDKs (Windows Driver Kit
 It does not include any configurations for WDF projects and may never include
 them in future. I'll just wait for feedback before deciding about it.\\
 It is compatible with Visual Studio .NET, Visual Studio .NET 2003, Visual Studio 2005,
-Visual Studio 2008 and the Express Editions of Visual C++ 2005 and 2008. The ``normal''
+2008, 2010 and the Express Editions of Visual C++ 2005, 2008 and 2010. The ``normal''
 Visual C++ versions are supposed to work fine as well. Refer to \autoref{sec:propsheets}
 and \autoref{compat:activex} for some possible limitations depending
 on your Visual Studio version.\\
-Visual Studio 2005 and 2008 (and its flavors) support all \ddkwiz{} features!
+Visual Studio 2005, 2008 and 2010 (and their flavors) support all \ddkwiz{} features!
 
 \section*{Prerequisites}
 \addcontentsline{toc}{section}{\numberline{}Prerequisites}
@@ -237,7 +237,7 @@ The following license applies to all parts of \ddkwiz{}, \emph{except for any ac
 project templates, which are released into the \texttt{PUBLIC DOMAIN} - see below}.
 
 \begin{verbatim}
-Copyright (c) 2006-2008 by Oliver Schneider (assarbad.net)
+Copyright (c) 2006-2009 by Oliver Schneider (assarbad.net)
 
 This software is provided 'as-is', without any express or implied warranty. In
 no event will the authors be held liable for any damages arising from the use
@@ -430,7 +430,7 @@ whichever DDK you like) in parallel. \texttt{DDKBUILD.CMD} is all about choices 
 \chapter{Usage of the wizard}\thispagestyle{fancy}
 \section{Installing the wizard}
 To install \ddkwiz{} you should only need Windows 2000 or newer, Visual Studio .NET,
-.NET 2003, 2005 or 2008\footnote{... only
+.NET 2003, 2005, 2008 or 2010\footnote{... only
 Visual C++ instead of the full-fledged Visual Studio suite will be enough as well.}
 and a few clicks. Since laziness is one of the pillars on which this software was
 built, the installer is as easy as can be.
@@ -447,7 +447,7 @@ you to edit the configuration file.\\
 
 After these few steps you can start the VS IDE (actually it won't even hurt if it
 was already running) and try to create a new project. Depending on the version
-this is either \texttt{Shift+Ctrl+N} (2003) or \texttt{Ctrl+N} (2005 and 2008)
+this is either \texttt{Shift+Ctrl+N} (2003) or \texttt{Ctrl+N} (2005, 2008 and 2010)
 as the default setting.
 
 You will notice a new folder \emph{DDK Project} in the left pane and you
@@ -902,7 +902,7 @@ In fact you will find some comments in the source, already.
 If you like to create custom project templates, the best starting point is to pick one
 of the existing templates from \ddkwiz{} and modify them. In any case you will have to
 register the new templates with each version of Visual Studio or Visual C++.
-The steps should work for the versions 2003 through 2008.
+The steps should work for the versions 2003 through 2010.
 
 \section{Registration files}
 For the sake of brevity, I will assume you have Visual Studio 2005 and that it is installed
