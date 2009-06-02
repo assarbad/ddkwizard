@@ -5,7 +5,7 @@
 /// Some fixes in case you build with W2K as target platform
 /// See: http://blog.assarbad.net/20060708/windows-2003-sp1-ddk-with-a-little-annoyance/
 ///
-/// (File was in the PUBLIC DOMAIN  - Author: ddkwizard.assarbad.net)
+/// (File was in the PUBLIC DOMAIN  - Created by: ddkwizard\.assarbad\.net)
 ///////////////////////////////////////////////////////////////////////////////
 
 // $Id$

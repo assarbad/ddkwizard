@@ -4,7 +4,7 @@
 ///
 /// Some useful prototypes for native applications
 ///
-/// (File was in the PUBLIC DOMAIN  - Author: ddkwizard.assarbad.net)
+/// (File was in the PUBLIC DOMAIN  - Created by: ddkwizard\.assarbad\.net)
 ///////////////////////////////////////////////////////////////////////////////
 
 // $Id$

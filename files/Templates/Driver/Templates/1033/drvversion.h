@@ -4,7 +4,7 @@
 ///
 /// Defines for the version information in the resource file
 ///
-/// (File was in the PUBLIC DOMAIN  - Author: ddkwizard.assarbad.net)
+/// (File was in the PUBLIC DOMAIN  - Created by: ddkwizard\.assarbad\.net)
 ///////////////////////////////////////////////////////////////////////////////
 
 // $Id$
@@ -34,7 +34,7 @@
 [!else]
 #define FILE_BUILD             0 // build file number
 [!endif]
-#define DRV_YEAR               [!output PROJECT_YEAR] // current year or timespan (e.g. 2003-2007)
+#define DRV_YEAR               [!output PROJECT_YEAR] // current year or timespan (e.g. 2003-2009)
 #define TEXT_WEBSITE           [!output DDKWIZ_USERVARIABLE_WEBSITE_C] // website
 #define TEXT_PRODUCTNAME       Supercool driver-based tool // product's name
 #define TEXT_FILEDESC          The driver for the supercool driver-based tool // component description
