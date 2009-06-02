@@ -3,10 +3,10 @@
 
   !include "MUI.nsh"
 #############################################################################
-  ; Other Defines needed
+  # Other Defines needed
   !define PRODUCT_NAME "DDKWizard"
   !define AUTHOR_NAME "Oliver Schneider (assarbad.net)"
-  !define COPYRIGHT_YEAR "© 2006-2008"
+  !define COPYRIGHT_YEAR "© 2006-2009"
   !define DISPLAY_VERSION "1.2.1"
   !define FILE_PRODUCT_VERSION "1.2.1.0"
   !define FILE_VERSION_COMMENTS "DDKWizard provides DDKBUILD project templates for Visual Studio .NET, .NET 2003, 2005 and 2008"
@@ -80,7 +80,7 @@
   XPStyle on
   LicenseForceSelection checkbox
 
-  ; Default installation folder
+  # Default installation folder
   InstallDir "$PROGRAMFILES\${PRODUCT_NAME}"
 
 #############################################################################
@@ -145,15 +145,15 @@
 Function CreateVSZ_${product}
   FileOpen $R0 '$0\$1.vsz' w
   FileWrite $R0 'VSWIZARD ${${product}_VSWIZARD}'
-  FileWrite $R0 "$\r$\n" ; Line break
+  FileWrite $R0 "$\r$\n" # Line break
   FileWrite $R0 'Wizard=VsWizard.VsWizardEngine${${product}_VSWIZARD_VERSION}'
-  FileWrite $R0 "$\r$\n" ; Line break
+  FileWrite $R0 "$\r$\n" # Line break
   FileWrite $R0 'Param="WIZARD_NAME = $1"'
-  FileWrite $R0 "$\r$\n" ; Line break
+  FileWrite $R0 "$\r$\n" # Line break
   FileWrite $R0 'Param="ABSOLUTE_PATH = $INSTDIR\Wizards\$1"'
-  FileWrite $R0 "$\r$\n" ; Line break
+  FileWrite $R0 "$\r$\n" # Line break
   FileWrite $R0 'Param="FALLBACK_LCID = 1033"'
-  FileWrite $R0 "$\r$\n" ; Line break
+  FileWrite $R0 "$\r$\n" # Line break
   FileClose $R0
 FunctionEnd
 !macroend
@@ -197,7 +197,7 @@ Overwrite_Config:
 No_Overwrite_Config:
   # Create shortcut to the help on desktop
   CreateShortCut "$DESKTOP\${HELP_SHORTCUT_NAME}" "$INSTDIR\${HELP_FILE_NAME}"
-  Call CreateUninstallEntry ; Create entry in "Add/Remove Software"
+  Call CreateUninstallEntry # Create entry in "Add/Remove Software"
   Goto EndOfInstallSection
 No_Visual_Studio_Found:
   StrCpy $0 "Can't install. The installer could not find any of the required products."
@@ -211,7 +211,7 @@ Function CopyScripts
   File /r /x .svn .\files\Wizard\*
   Delete "$0\Templates\1033\CustomVars.vsprops"
 #  FileOpen $R0 '$0\HTML\1033\Config.ini' w
-#  FileWrite $R0 "[General]$\r$\nInstDir=$INSTDIR$\r$\n" ; Line break
+#  FileWrite $R0 "[General]$\r$\nInstDir=$INSTDIR$\r$\n" # Line break
 #  FileClose $R0
 FunctionEnd
 
@@ -271,11 +271,11 @@ Function .onInit
 FunctionEnd
 
 Function CreateUninstallEntry
-  ; Create the uninstaller
+  # Create the uninstaller
   WriteUninstaller "$INSTDIR\${UNINSTALL_EXE}"
   WriteRegExpandStr HKCU "${UNINSTALL_KEY}" "UninstallString" '"$INSTDIR\${UNINSTALL_EXE}"'
   WriteRegExpandStr HKCU "${UNINSTALL_KEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr       HKCU "${UNINSTALL_KEY}" "DisplayName" "${PRODUCT_NAME} (DDKBUILD project templates)"
+  WriteRegStr       HKCU "${UNINSTALL_KEY}" "DisplayName" "${PRODUCT_NAME} (DDKBUILD project templates for Visual Studio)"
   WriteRegStr       HKCU "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\${UNINSTALL_EXE},0"
   WriteRegStr       HKCU "${UNINSTALL_KEY}" "DisplayVersion" "${DISPLAY_VERSION}"
   WriteRegStr       HKCU "${UNINSTALL_KEY}" "Publisher" "${AUTHOR_NAME}"
