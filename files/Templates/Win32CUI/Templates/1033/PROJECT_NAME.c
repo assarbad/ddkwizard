@@ -33,11 +33,14 @@
 int __cdecl _tmain(int argc, _TCHAR *argv[])
 {
 [!if STRICTERCPP_CHECKBOX]
-	using namespace std;
+    using namespace std;
 
-	cout << "Hello world" << endl;
-[!else]
-	_tprintf(_T("Hello world\n"));
+    cout << "Hello world" << endl;
+/*
 [!endif]
-	return 0;
+    _tprintf(_T("Hello world\n"));
+[!if STRICTERCPP_CHECKBOX]
+*/
+[!endif]
+    return 0;
 }

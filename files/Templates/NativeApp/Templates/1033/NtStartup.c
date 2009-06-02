@@ -22,7 +22,7 @@ extern void NtProcessStartupForGS(void * StartupArgument);
 
 void NtProcessStartupForGS(void * StartupArgument)
 {
-	NtProcessStartup(StartupArgument);
+    NtProcessStartup(StartupArgument);
 }
 
 #ifdef __cplusplus

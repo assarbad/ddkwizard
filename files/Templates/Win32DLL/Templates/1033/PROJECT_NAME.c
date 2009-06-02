@@ -31,7 +31,7 @@
 [!if STRICTERCPP_CHECKBOX]
 namespace
 {
-	static HINSTANCE hInstance = NULL;
+    static HINSTANCE hInstance = NULL;
 }
 [!else]
 static HINSTANCE hInstance = NULL;
@@ -39,16 +39,16 @@ static HINSTANCE hInstance = NULL;
 
 BOOL WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpvReserved)
 {
-	switch(dwReason)
-	{
-	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls(hModule);
-		hInstance = hModule;
-		break;
-	case DLL_PROCESS_DETACH:
-		break;
-	default:
-	    break;
-	}
-	return TRUE;
+    switch(dwReason)
+    {
+    case DLL_PROCESS_ATTACH:
+        DisableThreadLibraryCalls(hModule);
+        hInstance = hModule;
+        break;
+    case DLL_PROCESS_DETACH:
+        break;
+    default:
+        break;
+    }
+    return TRUE;
 }

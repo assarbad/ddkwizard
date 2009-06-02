@@ -25,7 +25,7 @@ extern "C" {
 
 NTSTATUS __cdecl main(int argc, char *argv[], char *envp[], ULONG DebugParameter OPTIONAL)
 {
-	return STATUS_SUCCESS;
+    return STATUS_SUCCESS;
 }
 
 #ifdef __cplusplus

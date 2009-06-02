@@ -863,25 +863,25 @@ typedef struct _RTL_PROCESS_MODULES
 
 typedef struct _RTL_DEBUG_INFORMATION
 {
-	HANDLE								SectionHandleClient;
-	PVOID								ViewBaseClient;
-	PVOID								ViewBaseTarget;
-	ULONG								ViewBaseDelta;
-	HANDLE								EventPairClient;
-	HANDLE								EventPairTarget;
-	HANDLE								TargetProcessId;
-	HANDLE								TargetThreadHandle;
-	ULONG								Flags;
-	ULONG								OffsetFree;
-	ULONG								CommitSize;
-	ULONG								ViewSize;
-	PRTL_PROCESS_MODULES				Modules;
-	PVOID								BackTraces; // PRTL_PROCESS_BACKTRACES
-	PVOID								Heaps; // PRTL_PROCESS_HEAPS
-	PVOID								Locks; // PRTL_PROCESS_LOCKS
-	PVOID								SpecificHeap;
-	HANDLE								TargetProcessHandle;
-	PVOID								Reserved[6];
+    HANDLE								SectionHandleClient;
+    PVOID								ViewBaseClient;
+    PVOID								ViewBaseTarget;
+    ULONG								ViewBaseDelta;
+    HANDLE								EventPairClient;
+    HANDLE								EventPairTarget;
+    HANDLE								TargetProcessId;
+    HANDLE								TargetThreadHandle;
+    ULONG								Flags;
+    ULONG								OffsetFree;
+    ULONG								CommitSize;
+    ULONG								ViewSize;
+    PRTL_PROCESS_MODULES				Modules;
+    PVOID								BackTraces; // PRTL_PROCESS_BACKTRACES
+    PVOID								Heaps; // PRTL_PROCESS_HEAPS
+    PVOID								Locks; // PRTL_PROCESS_LOCKS
+    PVOID								SpecificHeap;
+    HANDLE								TargetProcessHandle;
+    PVOID								Reserved[6];
 } RTL_DEBUG_INFORMATION, *PRTL_DEBUG_INFORMATION;
 
 #define RTL_QUERY_PROCESS_MODULES		0x00000001
@@ -894,76 +894,76 @@ typedef struct _RTL_DEBUG_INFORMATION
 
 typedef enum
 {
-	StateInitialized,
-	StateReady,
-	StateRunning,
-	StateStandby,
-	StateTerminated,
-	StateWait,
-	StateTransition,
-	StateUnknown
+    StateInitialized,
+    StateReady,
+    StateRunning,
+    StateStandby,
+    StateTerminated,
+    StateWait,
+    StateTransition,
+    StateUnknown
 } THREAD_STATE;
 
 typedef struct _SYSTEM_THREADS
 {
-	LARGE_INTEGER						KernelTime;
-	LARGE_INTEGER						UserTime;
-	LARGE_INTEGER						CreateTime;
-	ULONG								WaitTime;
-	PVOID								StartAddress;
-	CLIENT_ID							ClientId;
-	KPRIORITY							Priority;
-	KPRIORITY							BasePriority;
-	ULONG								ContextSwitchCount;
-	THREAD_STATE						State;
-	KWAIT_REASON						WaitReason;
+    LARGE_INTEGER						KernelTime;
+    LARGE_INTEGER						UserTime;
+    LARGE_INTEGER						CreateTime;
+    ULONG								WaitTime;
+    PVOID								StartAddress;
+    CLIENT_ID							ClientId;
+    KPRIORITY							Priority;
+    KPRIORITY							BasePriority;
+    ULONG								ContextSwitchCount;
+    THREAD_STATE						State;
+    KWAIT_REASON						WaitReason;
 } SYSTEM_THREADS, *PSYSTEM_THREADS;
 
 typedef struct _SYSTEM_PROCESS_INFORMATION_COMMON
 {
-	ULONG								NextEntryOffset;
-	ULONG								NumberOfThreads;
-	ULONG								Reserved1[6];
-	LARGE_INTEGER						CreateTime;
-	LARGE_INTEGER						UserTime;
-	LARGE_INTEGER						KernelTime;
-	UNICODE_STRING						ImageName;
-	KPRIORITY							BasePriority;
-	HANDLE								UniqueProcessId;
-	HANDLE								InheritedFromUniqueProcessId;
-	ULONG								HandleCount;
-	ULONG								Reserved[2];
-	VM_COUNTERS							VmCounters;
+    ULONG								NextEntryOffset;
+    ULONG								NumberOfThreads;
+    ULONG								Reserved1[6];
+    LARGE_INTEGER						CreateTime;
+    LARGE_INTEGER						UserTime;
+    LARGE_INTEGER						KernelTime;
+    UNICODE_STRING						ImageName;
+    KPRIORITY							BasePriority;
+    HANDLE								UniqueProcessId;
+    HANDLE								InheritedFromUniqueProcessId;
+    ULONG								HandleCount;
+    ULONG								Reserved[2];
+    VM_COUNTERS							VmCounters;
 } SYSTEM_PROCESS_INFORMATION_COMMON, *PSYSTEM_PROCESS_INFORMATION_COMMON;
 
 typedef struct _SYSTEM_PROCESS_INFORMATION_NT4
 {
-	SYSTEM_PROCESS_INFORMATION_COMMON	Process;
-	SYSTEM_THREADS						Threads[ANYSIZE_ARRAY];
+    SYSTEM_PROCESS_INFORMATION_COMMON	Process;
+    SYSTEM_THREADS						Threads[ANYSIZE_ARRAY];
 } SYSTEM_PROCESS_INFORMATION_NT4, *PSYSTEM_PROCESS_INFORMATION_NT4;
 
 typedef struct _SYSTEM_PROCESS_INFORMATION_NT5
 {
-	SYSTEM_PROCESS_INFORMATION_COMMON	Process;
-	IO_COUNTERS							IoCounters; // Only Windows 2000 and higher
-	SYSTEM_THREADS						Threads[ANYSIZE_ARRAY];
+    SYSTEM_PROCESS_INFORMATION_COMMON	Process;
+    IO_COUNTERS							IoCounters; // Only Windows 2000 and higher
+    SYSTEM_THREADS						Threads[ANYSIZE_ARRAY];
 } SYSTEM_PROCESS_INFORMATION_NT5, *PSYSTEM_PROCESS_INFORMATION_NT5;
 
 typedef union _SYSTEM_PROCESS_INFORMATION
 {
-	SYSTEM_PROCESS_INFORMATION_COMMON	Process;
-	SYSTEM_PROCESS_INFORMATION_NT4		Nt4;
-	SYSTEM_PROCESS_INFORMATION_NT5		Nt5;
+    SYSTEM_PROCESS_INFORMATION_COMMON	Process;
+    SYSTEM_PROCESS_INFORMATION_NT4		Nt4;
+    SYSTEM_PROCESS_INFORMATION_NT5		Nt5;
 } SYSTEM_PROCESS_INFORMATION, *PSYSTEM_PROCESS_INFORMATION;
 
 // Verified in XP using WinDbg
 typedef struct _LDR_DATA_TABLE_ENTRY
 {
-			union {
+            union {
   /*0x000*/ LIST_ENTRY					InLoadOrderLinks;
   /*0x000*/ LIST_ENTRY					InMemoryOrderLinks;
   /*0x000*/ LIST_ENTRY					InInitializationOrderLinks;
-			};
+            };
   /*0x008*/ PVOID						DllBase;
   /*0x00c*/ PVOID						EntryPoint;
   /*0x010*/ ULONG						SizeOfImage;
@@ -1082,10 +1082,10 @@ typedef struct _PEB
   /*0x02c*/ PPVOID						KernelCallbackTable; // List of callback functions
   /*0x030*/ ULONG						SystemReserved[1];
   // No idea which is used in Windows 2000!
-			union {
+            union {
   /*0x034*/ ULONG						ExecuteOptions; // 2 Bits used (Windows 2003)
   /*0x034*/ PVOID						AtlThunkSListPtr32; // (Windows XP)
-			};
+            };
   /*0x038*/ PPEB_FREE_BLOCK				FreeList;
   /*0x03c*/ ULONG						TlsExpansionCounter;
   /*0x040*/ PVOID						TlsBitmap; // ntdll!TlsBitMap of type PRTL_BITMAP
@@ -1099,7 +1099,7 @@ typedef struct _PEB
   /*0x064*/ ULONG						NumberOfProcessors;
   /*0x068*/ ULONG						NtGlobalFlag;
   // Padding or something
-			ULONG						Unknown01;
+            ULONG						Unknown01;
   /*0x070*/ LARGE_INTEGER				CriticalSectionTimeout;
   /*0x078*/ ULONG						HeapSegmentReserve;
   /*0x07c*/ ULONG						HeapSegmentCommit;
@@ -1256,17 +1256,17 @@ typedef struct _TEB
   /*0xbf4*/ ULONG						LastStatusValue;
   /*0xbf8*/ UNICODE_STRING				StaticUnicodeString;
   /*0xc00*/ WCHAR						StaticUnicodeBuffer[MAX_PATH+1];
-			USHORT						Padding;
+            USHORT						Padding;
   /*0xe0c*/ PVOID						DeallocationStack;
   /*0xe10*/ PVOID						TlsSlots[64];
   /*0xf10*/ LIST_ENTRY					TlsLinks;
   /*0xf18*/ PVOID						Vdm;
   /*0xf1c*/ PVOID						ReservedForNtRpc;
   /*0xf20*/ PVOID						DbgSsReserved[2];
-			union {
+            union {
   /*0xf28*/ ULONG						HardErrorMode; // (Windows 2003)
   /*0xf28*/ ULONG						HardErrorsAreDisabled; // (Windows XP)
-			};
+            };
   /*0xf2c*/ PVOID						Instrumentation[16];
   /*0xf6c*/ PVOID						WinSockData;
   /*0xf70*/ ULONG						GdiBatchCount;
@@ -1297,12 +1297,12 @@ typedef struct _TEB
 
 typedef struct _THREAD_BASIC_INFORMATION
 {
-	NTSTATUS							ExitStatus;
-	PTEB								TebBaseAddress;
-	CLIENT_ID							ClientId;
-	KAFFINITY							AffinityMask;
-	KPRIORITY							Priority;
-	KPRIORITY							BasePriority;
+    NTSTATUS							ExitStatus;
+    PTEB								TebBaseAddress;
+    CLIENT_ID							ClientId;
+    KAFFINITY							AffinityMask;
+    KPRIORITY							Priority;
+    KPRIORITY							BasePriority;
 } THREAD_BASIC_INFORMATION, *PTHREAD_BASIC_INFORMATION;
 
 typedef enum _SYSTEM_INFORMATION_CLASS
@@ -1865,8 +1865,8 @@ typedef struct _MUTANT_BASIC_INFORMATION
 } MUTANT_BASIC_INFORMATION, *PMUTANT_BASIC_INFORMATION;
 
 typedef struct _RTL_HEAP_DEFINITION {
-	ULONG    	Length;
-	ULONG    	Unknown[11];
+    ULONG    	Length;
+    ULONG    	Unknown[11];
 } RTL_HEAP_DEFINITION, *PRTL_HEAP_DEFINITION;
 
 typedef struct _SECTION_IMAGE_INFORMATION
@@ -2621,28 +2621,28 @@ NTSYSAPI
 NTSTATUS
 NTAPI
 LdrLoadDll(
-	IN PWCHAR           PathToFile OPTIONAL,
-	IN ULONG            Flags OPTIONAL,
-	IN PUNICODE_STRING  ModuleFileName,
-	OUT PHANDLE			ModuleHandle
-	);
+    IN PWCHAR           PathToFile OPTIONAL,
+    IN ULONG            Flags OPTIONAL,
+    IN PUNICODE_STRING  ModuleFileName,
+    OUT PHANDLE			ModuleHandle
+    );
 
 NTSYSAPI 
 NTSTATUS
 NTAPI
 LdrUnloadDll(
-	IN HANDLE           ModuleHandle
-	);
+    IN HANDLE           ModuleHandle
+    );
 
 NTSYSAPI 
 NTSTATUS
 NTAPI
 LdrGetProcedureAddress(
-	IN HANDLE           ModuleHandle,
-	IN PANSI_STRING     FunctionName OPTIONAL,
-	IN WORD             Ordinal OPTIONAL,
-	OUT PVOID			*FunctionAddress
-	);
+    IN HANDLE           ModuleHandle,
+    IN PANSI_STRING     FunctionName OPTIONAL,
+    IN WORD             Ordinal OPTIONAL,
+    OUT PVOID			*FunctionAddress
+    );
 
 NTSYSAPI
 NTSTATUS
@@ -3104,14 +3104,14 @@ VOID
 NTAPI
 RtlDeNormalizeProcessParams(
     IN OUT PRTL_USER_PROCESS_PARAMETERS ProcessParameters
-	);
+    );
 
 NTSYSAPI
 NTSTATUS
 NTAPI
 ZwInitializeRegistry(
-	IN BOOLEAN Setup
-	);
+    IN BOOLEAN Setup
+    );
 
 NTSYSAPI
 NTSTATUS
@@ -3124,30 +3124,30 @@ NTSYSAPI
 BOOLEAN
 NTAPI
 RtlCreateUnicodeStringFromAsciiz(
-	OUT PUNICODE_STRING usDestination,
-	PCSZ pszSource
-	);
+    OUT PUNICODE_STRING usDestination,
+    PCSZ pszSource
+    );
 
 NTSYSAPI
 HANDLE 
 NTAPI 
 RtlCreateHeap(
-	ULONG Flags, 
-	PVOID BaseAddress, 
-	ULONG SizeToReserve, 
-	ULONG SizeToCommit, 
-	PVOID Unknown,
-	PRTL_HEAP_DEFINITION Definition
-	);
+    ULONG Flags, 
+    PVOID BaseAddress, 
+    ULONG SizeToReserve, 
+    ULONG SizeToCommit, 
+    PVOID Unknown,
+    PRTL_HEAP_DEFINITION Definition
+    );
 
 NTSYSAPI
 PVOID 
 NTAPI 
 RtlAllocateHeap(
-	HANDLE Heap, 
-	ULONG Flags, 
-	ULONG Size 
-	);
+    HANDLE Heap, 
+    ULONG Flags, 
+    ULONG Size 
+    );
 
 NTSYSAPI
 BOOLEAN 
@@ -3156,7 +3156,7 @@ RtlFreeHeap(
     HANDLE Heap, 
     ULONG Flags, 
     PVOID Address 
-	);
+    );
 
 NTSYSAPI
 BOOLEAN

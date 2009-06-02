@@ -36,11 +36,11 @@
 #define CREATE_PVER(maj,min,build) maj ## . ## min
 
 #if DBG
-	#ifdef ADVANCED_DEBUG
-	#define DebugPrint DbgPrint("[%s] %s (line: %d)\n", __##FILE##__, __##FUNCTION##__, __##LINE##__); DbgPrint
-	#else
-	#define DebugPrint DbgPrint
-	#endif
+    #ifdef ADVANCED_DEBUG
+    #define DebugPrint DbgPrint("[%s] %s (line: %d)\n", __##FILE##__, __##FUNCTION##__, __##LINE##__); DbgPrint
+    #else
+    #define DebugPrint DbgPrint
+    #endif
 #else
 #define DebugPrint /##/DbgPrint
 #endif
