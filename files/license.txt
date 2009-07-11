@@ -13,4 +13,4 @@ Permission is granted to anyone to use this software for any purpose, including 
 3. This notice may not be removed or altered from any source distribution.
 
 
-NOTE: The above license is commonly known as the zlib/libpng license and is one of the most liberal ones. The project templates have been released into the PUBLIC DOMAIN, so they can be reused in whatever context and for whatever purpose you deem useful. However, the disclaimer "This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software." applies for the project templates as well!
+NOTE: The above license is commonly known as the zlib license and is one of the most liberal ones. The project templates have been released into the PUBLIC DOMAIN, so they can be reused in whatever context and for whatever purpose you deem useful. However, the disclaimer "This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software." applies for the project templates as well!
