@@ -55,7 +55,7 @@
 \newcommand{\optiondeco}[1]{#1\vspace{0.1cm}}
 \newcommand{\inioption}[1]{\\\textcolor[rgb]{0.00,0.00,0.40}{\textsl{Value name:} \texttt{#1}}}
 \def\ddkwiz{D\kern-.09em D\kern-.09em K\kern-.20em \raise-.20ex\hbox{W}\kern-.15em\raise.20ex\hbox{\it{i}}\kern-.02em{zard}}
-\newcommand{\ddkwizver}[0]{\ddkwiz{} v1.2.1}
+\newcommand{\ddkwizver}[0]{\ddkwiz{} v1.3.0}
 \newcommand{\prefast}[0]{\textsf{PRE\textsl{f}ast}}
 \newcommand{\solcfg}[2]{\texttt{#1 free} and \texttt{#1 checked}:\\#2}
 \newcommand{\solcfgsixfour}[2]{\texttt{#1 free} and \texttt{#1 checked} \textcolor[gray]{0.40}{\textsf{\small(only if 64bit support was activated)}}:\\#2}
@@ -160,12 +160,12 @@ versions from OSR take the same arguments, so using it with ``the other''
 Windows 2000, Windows XP, Windows 2003 Server and newer WDKs (Windows Driver Kits).
 It does not include any configurations for WDF projects and may never include
 them in future. I'll just wait for feedback before deciding about it.\\
-It is compatible with Visual Studio .NET, Visual Studio .NET 2003, Visual Studio 2005,
-2008, 2010 and the Express Editions of Visual C++ 2005, 2008 and 2010. The ``normal''
+It is compatible with Visual Studio .NET, Visual Studio .NET 2003, Visual Studio 2005
+and 2008 and the Express Editions of Visual C++ 2005 and 2008. The ``normal''
 Visual C++ versions are supposed to work fine as well. Refer to \autoref{sec:propsheets}
 and \autoref{compat:activex} for some possible limitations depending
 on your Visual Studio version.\\
-Visual Studio 2005, 2008 and 2010 (and their flavors) support all \ddkwiz{} features!
+Visual Studio 2005 and 2008 (and their flavors) support all \ddkwiz{} features!
 
 \section*{Prerequisites}
 \addcontentsline{toc}{section}{\numberline{}Prerequisites}
@@ -327,10 +327,6 @@ few steps:
     However, this is not supported by \ddkwiz{}.}:
     \begin{itemize}
         \item
-          \textbf{Windows 2000 DDK:}\\
-            For this DDK set the variable \texttt{W2KBASE} to point to the base directory of your
-            Windows 2000 DDK.
-        \item
           \textbf{Windows XP DDK:}\\
             For this DDK set the variable \texttt{WXPBASE} to point to the base directory of your
             Windows XP DDK. A usual location is \verb+C:\WINDDK\2600+.
@@ -341,8 +337,13 @@ few steps:
             (for the 2003 SP1 DDK).
         \item
           \textbf{Windows Vista/Windows 2008 Server WDK:}\\
-            For this DDK (formerly LDK, now WDK) set the variable \texttt{WLHBASE} to point to the base
-            directory of your WDK. The builds 6000 and 6001.18000 are supported at the time of this writing.
+            For this WDK (formerly LDK) set the variable \texttt{WLHBASE} to point to the base
+            directory of your WDK. The builds 6000 and 6001.18000 through 6001.18002 are supported
+            at the time of this writing.
+        \item
+          \textbf{Windows 7/Windows 2008 Server R2 WDK:}\\
+            For this WDK set the variable \texttt{W7BASE} to point to the base directory of your
+            WDK.
     \end{itemize}
     The \emph{exact} version of the DDK does not matter (i.e. 2003 SP1 DDK counts as 2003 DDK).
     Note that you can only use one environment variable setting per user/system. \ddkwiz{}
@@ -430,7 +431,7 @@ whichever DDK you like) in parallel. \texttt{DDKBUILD.CMD} is all about choices 
 \chapter{Usage of the wizard}\thispagestyle{fancy}
 \section{Installing the wizard}
 To install \ddkwiz{} you should only need Windows 2000 or newer, Visual Studio .NET,
-.NET 2003, 2005, 2008 or 2010\footnote{... only
+.NET 2003, 2005 or 2008\footnote{... only
 Visual C++ instead of the full-fledged Visual Studio suite will be enough as well.}
 and a few clicks. Since laziness is one of the pillars on which this software was
 built, the installer is as easy as can be.
@@ -447,7 +448,7 @@ you to edit the configuration file.\\
 
 After these few steps you can start the VS IDE (actually it won't even hurt if it
 was already running) and try to create a new project. Depending on the version
-this is either \texttt{Shift+Ctrl+N} (2003) or \texttt{Ctrl+N} (2005, 2008 and 2010)
+this is either \texttt{Shift+Ctrl+N} (2003) or \texttt{Ctrl+N} (2005 and 2008)
 as the default setting.
 
 You will notice a new folder \emph{DDK Project} in the left pane and you
@@ -560,12 +561,6 @@ options and will give a brief description for every one of them:
   Note that you have to give the full path including the filename of your
   \texttt{DDKBUILD} script.
   \inioption{checkbox.OVERRIDEDDKBUILD \textrm{and} text.OVERRIDEDDKBUILD}
-  \item \optiondeco{\option{Override \texttt{W2KBASE}} \default{off}:}\\
-  Similar to the previous option this allows you to override an environment
-  variable.
-  In this case the variable \texttt{W2KBASE} used by \texttt{DDKBUILD} to
-  locate the Windows 2000 DDK.
-  \inioption{checkbox.OVERRIDEW2KBASE \textrm{and} text.OVERRIDEW2KBASE}
   \item \optiondeco{\option{Override \texttt{WXPBASE}} \default{off}:}\\
   Similar to the previous option this allows you to override an environment
   variable.
@@ -582,8 +577,14 @@ options and will give a brief description for every one of them:
   Similar to the previous option this allows you to override an environment
   variable.
   In this case the variable \texttt{WLHBASE} used by \texttt{DDKBUILD} to
-  locate the Longhorn/Vista DDK (aka WDK).
+  locate the Vista/2008 Server WDK.
   \inioption{checkbox.OVERRIDEWLHBASE \textrm{and} text.OVERRIDEWLHBASE}
+  \item \optiondeco{\option{Override \texttt{W7BASE}} \default{off}:}\\
+  Similar to the previous option this allows you to override an environment
+  variable.
+  In this case the variable \texttt{W7BASE} used by \texttt{DDKBUILD} to
+  locate the Windows 7/Windows 2008 Server R2 WDK.
+  \inioption{checkbox.OVERRIDEW7BASE \textrm{and} text.OVERRIDEW7BASE}
 \end{itemize}
 
 As you can see the last few \emph{value names} appear in pairs. This is due to the
@@ -626,14 +627,15 @@ solution configurations can be created depending on your choice of DDKs.
   \item \solcfgsixfour{WNETXP64}{Use the Windows 2003 Server DDK to build a 64bit (Intel Itanium) driver with Windows XP as the target operating system platform.}
   \item \solcfgsixfour{WNETAMD64}{Use the Windows 2003 Server DDK to build a 64bit (AMD64, x64, EM64T) driver with Windows 2003 Server as the target operating system platform.}
   \item \solcfg{WNET2K}{Use the Windows 2003 Server DDK to build a 32bit driver with Windows 2000 as the target operating system platform.}
-  \item \solcfg{WLH}{Use the Longhorn/Vista WDK to build a 32bit driver with Windows Longhorn/Vista as the target operating system platform.}
-  \item \solcfg{WLH2K}{Use the Longhorn/Vista WDK to build a 32bit driver with Windows 2000 as the target operating system platform.}
-  \item \solcfg{WLHXP}{Use the Longhorn/Vista WDK to build a 32bit driver with Windows XP as the target operating system platform.}
-  \item \solcfg{WLHNET}{Use the Longhorn/Vista WDK to build a 32bit driver with Windows 2003 Server as the target operating system platform.}
-  \item \solcfgsixfour{WLHNETI64}{Use the Longhorn/Vista WDK to build a 64bit (Intel Itanium) driver with Windows 2003 Server as the target operating system platform.}
-  \item \solcfgsixfour{WLHNETX64}{Use the Longhorn/Vista WDK to build a 64bit (AMD64, x64, EM64T) driver with Windows 2003 Server as the target operating system platform.}
-  \item \solcfgsixfour{WLHI64}{Use the Longhorn/Vista WDK to build a 64bit (Intel Itanium) driver with Windows Longhorn/Vista as the target operating system platform.}
-  \item \solcfgsixfour{WLHX64}{Use the Longhorn/Vista WDK to build a 64bit (AMD64, x64, EM64T) driver with Windows Longhorn/Vista as the target operating system platform.}
+  \item \solcfg{WLH}{Use the Vista/2008 Server WDK to build a 32bit driver with Windows Vista/2008 Server as the target operating system platform.}
+  \item \solcfg{WLH2K}{Use the Vista/2008 Server WDK to build a 32bit driver with Windows 2000 as the target operating system platform.}
+  \item \solcfg{WLHXP}{Use the Vista/2008 Server WDK to build a 32bit driver with Windows XP as the target operating system platform.}
+  \item \solcfg{WLHXP64}{Use the Vista/2008 Server WDK to build a 64bit (Intel Itanium) driver with Windows XP as the target operating system platform.}
+  \item \solcfg{WLHNET}{Use the Vista/2008 Server WDK to build a 32bit driver with Windows 2003 Server as the target operating system platform.}
+  \item \solcfgsixfour{WLHNETI64}{Use the Vista/2008 Server WDK to build a 64bit (Intel Itanium) driver with Windows 2003 Server as the target operating system platform.}
+  \item \solcfgsixfour{WLHNETX64}{Use the Vista/2008 Server WDK to build a 64bit (AMD64, x64, EM64T) driver with Windows 2003 Server as the target operating system platform.}
+  \item \solcfgsixfour{WLHI64}{Use the Vista/2008 Server WDK to build a 64bit (Intel Itanium) driver with Windows Vista/2008 Server as the target operating system platform.}
+  \item \solcfgsixfour{WLHX64}{Use the Vista/2008 Server WDK to build a 64bit (AMD64, x64, EM64T) driver with Windows Vista/2008 Server as the target operating system platform.}
 \end{itemize}
 
 As you can see these names follow the naming of the target platforms for \texttt{DDKBUILD}
@@ -902,7 +904,7 @@ In fact you will find some comments in the source, already.
 If you like to create custom project templates, the best starting point is to pick one
 of the existing templates from \ddkwiz{} and modify them. In any case you will have to
 register the new templates with each version of Visual Studio or Visual C++.
-The steps should work for the versions 2003 through 2010.
+The steps should work for the versions 2003 through 2008.
 
 \section{Registration files}
 For the sake of brevity, I will assume you have Visual Studio 2005 and that it is installed
@@ -980,7 +982,7 @@ Here the list of variables. Please note, that especially the ones starting with
         Name (and optionally path) to \texttt{DDKBUILD}. Of course this could be
         just some third-party script with compatible command line options. It's up
         to you.
-  \item \verb+OVERRIDEW2KBASE_TEXT+, \verb+OVERRIDEWXPBASE_TEXT+, \verb+OVERRIDEWNETBASE_TEXT+ and \verb+OVERRIDEWLHBASE_TEXT+\\
+  \item \verb+OVERRIDEWXPBASE_TEXT+, \verb+OVERRIDEWNETBASE_TEXT+, \verb+OVERRIDEWLHBASE_TEXT+ and \verb+OVERRIDEW7BASE_TEXT+\\
         I can not imagine where these would be useful within the source files of a
         created project, but they will only be defined if you use Visual Studio 2005
         or later and have support for property sheets.\\
@@ -1101,9 +1103,16 @@ selection of available templates and download them from the \ddkwiz{} website.
             build a driver compatible with Windows XP x64.
           \item
             \textbf{Windows Vista/Windows 2008 Server WDK} (\texttt{WLHBASE})\\
-            With this DDK (formerly ``Longhorn Driver Kit'', now ``Windows Driver Kit'')
+            With this WDK (formerly ``Longhorn Driver Kit'')
             you can target almost all of the previously mentioned platforms. Support for
             Windows 2000 does not include IA-64 (``Itanium'').\\
+            \underline{Note:} Use the x64 configuration type for Windows 2003 Server to
+            build a driver compatible with Windows XP x64.
+          \item
+            \textbf{Windows 7/Windows 2008 Server R2 WDK} (\texttt{W7BASE})\\
+            With this WDK
+            you can target almost all of the previously mentioned platforms. Support for
+            Windows 2000 was apparently dropped, though.\\
             \underline{Note:} Use the x64 configuration type for Windows 2003 Server to
             build a driver compatible with Windows XP x64.
 
