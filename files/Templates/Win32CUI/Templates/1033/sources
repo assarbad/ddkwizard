@@ -24,7 +24,7 @@ NTTARGETFILES=makefile.inc
 #BROWSERFILE=<some path>
 
 # Additional defines for the C/C++ preprocessor
-!IF $(UNICODE)
+!IF defined(UNICODE) && $(UNICODE)
 UMENTRY=wmain
 C_DEFINES=$(C_DEFINES) /DUNICODE /D_UNICODE
 !ELSE

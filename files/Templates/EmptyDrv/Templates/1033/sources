@@ -2,19 +2,12 @@
 TARGETNAME=[!output PROJECT_NAME]
 TARGETPATH=obj
 TARGETTYPE=
-UNICODE=
 
 # Create browse info
 #BROWSER_INFO=1
 #BROWSERFILE=<some path>
 
 # Additional defines for the C/C++ preprocessor
-!IF $(UNICODE)
-UMENTRY=wmain
-C_DEFINES=$(C_DEFINES) /DUNICODE /D_UNICODE
-!ELSE
-UMENTRY=main
-C_DEFINES=$(C_DEFINES) /DMBCS /D_MBCS
-!ENDIF
+#C_DEFINES=
 
 SOURCES=
