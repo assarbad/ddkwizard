@@ -17,13 +17,6 @@
 		PerformEnvironmentSet="true"
 	/>
 [!endif]
-[!if OVERRIDEW2KBASE_CHECKBOX]
-	<UserMacro
-		Name="W2KBASE"
-		Value="[!output OVERRIDEW2KBASE_TEXT]"
-		PerformEnvironmentSet="true"
-	/>
-[!endif]
 [!if OVERRIDEWXPBASE_CHECKBOX]
 	<UserMacro
 		Name="WXPBASE"
@@ -42,6 +35,13 @@
 	<UserMacro
 		Name="WLHBASE"
 		Value="[!output OVERRIDEWLHBASE_TEXT]"
+		PerformEnvironmentSet="true"
+	/>
+[!endif]
+[!if OVERRIDEW7BASE_CHECKBOX]
+	<UserMacro
+		Name="W7BASE"
+		Value="[!output OVERRIDEW7BASE_TEXT]"
 		PerformEnvironmentSet="true"
 	/>
 [!endif]

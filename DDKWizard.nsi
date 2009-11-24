@@ -7,9 +7,9 @@
   !define PRODUCT_NAME "DDKWizard"
   !define AUTHOR_NAME "Oliver Schneider (assarbad.net)"
   !define COPYRIGHT_YEAR "© 2006-2009"
-  !define DISPLAY_VERSION "1.2.1"
-  !define FILE_PRODUCT_VERSION "1.2.1.0"
-  !define FILE_VERSION_COMMENTS "DDKWizard provides DDKBUILD project templates for Visual Studio .NET, .NET 2003, 2005, 2008 and 2010"
+  !define DISPLAY_VERSION "1.3.0"
+  !define FILE_PRODUCT_VERSION "1.3.0.0"
+  !define FILE_VERSION_COMMENTS "DDKWizard provides DDKBUILD project templates for Visual Studio .NET, .NET 2003, 2005 and 2008"
   !define FILES_FOR_SPECIFIC_TEMPLATES_DIR ".\files\Templates\*"
   !define FILES_FROM_INSTALLER_DIR ".\files\DDK_Project\*"
   !define HELP_FILE_NAME "DDKWizard_Help.pdf"
@@ -31,8 +31,8 @@
   !define VC2005Exp "VC2005Exp"
   !define VS2008 "VS2008"
   !define VC2008Exp "VC2008Exp"
-  !define VS2010 "VS2010"
-  !define VC2010Exp "VC2010Exp"
+#  !define VS2010 "VS2010"
+#  !define VC2010Exp "VC2010Exp"
   !define ${VSNET}_PRODUCT_KEY "${SOFTWARE_KEY}\VisualStudio\7.0"
   !define ${VS2003}_PRODUCT_KEY "${SOFTWARE_KEY}\VisualStudio\7.1"
   !define ${VC2003Exp}_PRODUCT_KEY "${SOFTWARE_KEY}\VCExpress\7.1"
@@ -40,8 +40,8 @@
   !define ${VC2005Exp}_PRODUCT_KEY "${SOFTWARE_KEY}\VCExpress\8.0"
   !define ${VS2008}_PRODUCT_KEY "${SOFTWARE_KEY}\VisualStudio\9.0"
   !define ${VC2008Exp}_PRODUCT_KEY "${SOFTWARE_KEY}\VCExpress\9.0"
-  !define ${VS2010}_PRODUCT_KEY "${SOFTWARE_KEY}\VisualStudio\10.0"
-  !define ${VC2010Exp}_PRODUCT_KEY "${SOFTWARE_KEY}\VCExpress\10.0"
+#  !define ${VS2010}_PRODUCT_KEY "${SOFTWARE_KEY}\VisualStudio\10.0"
+#  !define ${VC2010Exp}_PRODUCT_KEY "${SOFTWARE_KEY}\VCExpress\10.0"
   !define ${VSNET}_PRODUCT_NAME "Visual Studio .NET"
   !define ${VS2003}_PRODUCT_NAME "Visual Studio .NET 2003"
   !define ${VC2003Exp}_PRODUCT_NAME "Visual C++ 2003 Express"
@@ -49,8 +49,8 @@
   !define ${VC2005Exp}_PRODUCT_NAME "Visual C++ 2005 Express"
   !define ${VS2008}_PRODUCT_NAME "Visual Studio 2008"
   !define ${VC2008Exp}_PRODUCT_NAME "Visual C++ 2008 Express"
-  !define ${VS2010}_PRODUCT_NAME "Visual Studio 2010"
-  !define ${VC2010Exp}_PRODUCT_NAME "Visual C++ 2010 Express"
+#  !define ${VS2010}_PRODUCT_NAME "Visual Studio 2010"
+#  !define ${VC2010Exp}_PRODUCT_NAME "Visual C++ 2010 Express"
 
   !define ${VSNET}_PRODUCT_FUNC "CreateVSZ_${VSNET}"
   !define ${VS2003}_PRODUCT_FUNC "CreateVSZ_${VS2003}"
@@ -59,8 +59,8 @@
   !define ${VC2005Exp}_PRODUCT_FUNC "CreateVSZ_${VS2005}"
   !define ${VS2008}_PRODUCT_FUNC "CreateVSZ_${VS2008}"
   !define ${VC2008Exp}_PRODUCT_FUNC "CreateVSZ_${VS2008}"
-  !define ${VS2010}_PRODUCT_FUNC "CreateVSZ_${VS2010}"
-  !define ${VC2010Exp}_PRODUCT_FUNC "CreateVSZ_${VS2010}"
+#  !define ${VS2010}_PRODUCT_FUNC "CreateVSZ_${VS2010}"
+#  !define ${VC2010Exp}_PRODUCT_FUNC "CreateVSZ_${VS2010}"
 
   !define ${VSNET}_VSWIZARD "7.0"
   !define ${VSNET}_VSWIZARD_VERSION ""
@@ -70,8 +70,8 @@
   !define ${VS2005}_VSWIZARD_VERSION ".8.0"
   !define ${VS2008}_VSWIZARD "${${VSNET}_VSWIZARD}"
   !define ${VS2008}_VSWIZARD_VERSION ".9.0"
-  !define ${VS2010}_VSWIZARD "${${VSNET}_VSWIZARD}"
-  !define ${VS2010}_VSWIZARD_VERSION ".10.0"
+#  !define ${VS2010}_VSWIZARD "${${VSNET}_VSWIZARD}"
+#  !define ${VS2010}_VSWIZARD_VERSION ".10.0"
 
   Var sProductKey
   Var sProductName
@@ -180,8 +180,8 @@ Section "-Required"
   !insertmacro ProductInstall ${VC2005Exp}
   !insertmacro ProductInstall ${VS2008}
   !insertmacro ProductInstall ${VC2008Exp}
-  !insertmacro ProductInstall ${VS2010}
-  !insertmacro ProductInstall ${VC2010Exp}
+#  !insertmacro ProductInstall ${VS2010}
+#  !insertmacro ProductInstall ${VC2010Exp}
   StrCmp $9 "0" No_Visual_Studio_Found 0
   DetailPrint "Installing common components"
   SetOutPath $INSTDIR\Wizards
@@ -262,8 +262,8 @@ Function SpecificProductDispatcher
   !insertmacro DispatchProduct ${VC2005Exp}
   !insertmacro DispatchProduct ${VS2008}
   !insertmacro DispatchProduct ${VC2008Exp}
-  !insertmacro DispatchProduct ${VS2010}
-  !insertmacro DispatchProduct ${VC2010Exp}
+#  !insertmacro DispatchProduct ${VS2010}
+#  !insertmacro DispatchProduct ${VC2010Exp}
 ExitThis:
 FunctionEnd
 
@@ -272,7 +272,7 @@ FunctionEnd
 !insertmacro MakeCreationFunction ${VS2003}
 !insertmacro MakeCreationFunction ${VS2005}
 !insertmacro MakeCreationFunction ${VS2008}
-!insertmacro MakeCreationFunction ${VS2010}
+#!insertmacro MakeCreationFunction ${VS2010}
 
 #############################################################################
 #Installer Functions
@@ -321,8 +321,8 @@ Section "Uninstall"
   !insertmacro ProductUninstall ${VC2005Exp}
   !insertmacro ProductUninstall ${VS2008}
   !insertmacro ProductUninstall ${VC2008Exp}
-  !insertmacro ProductUninstall ${VS2010}
-  !insertmacro ProductUninstall ${VC2010Exp}
+#  !insertmacro ProductUninstall ${VS2010}
+#  !insertmacro ProductUninstall ${VC2010Exp}
   StrCmp $9 "0" 0 Common
 # No_Visual_Studio_Found:
   DetailPrint "Strangely none of the required products was found."

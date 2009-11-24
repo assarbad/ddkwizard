@@ -33,7 +33,7 @@
 	<!--  -->
 	<!-- The SYMBOL tag is used to set the default values for the user-defined symbols.-->
 	<!--  -->
-	<symbol name='WIZARD_DIALOG_TITLE' type=text value='DDKWizard 1.2.1 | DDKBUILD project creation'></symbol>
+	<symbol name='WIZARD_DIALOG_TITLE' type=text value='DDKWizard 1.3.0 | DDKBUILD project creation'></symbol>
 	<symbol name='DDKBUILD_COMBOBOX' type="select-one" value="ddkbuild.cmd"></symbol>
 	<symbol name='STRICTERCPP_CHECKBOX' type="checkbox" value="true"></symbol>
 	<symbol name='MAKEFILEINC_CHECKBOX' type="checkbox" value="false"></symbol>
@@ -47,15 +47,15 @@
 	<symbol name='PREFASTCONFIG_CHECKBOX' type="checkbox" value="true"></symbol>
 	<symbol name='PREFASTCONFIG_ONLYCHECKED_CHECKBOX' type="checkbox" value="true"></symbol>
 	<symbol name='OVERRIDEDDKBUILD_CHECKBOX' type="checkbox" value="false"></symbol>
-	<symbol name='OVERRIDEW2KBASE_CHECKBOX' type="checkbox" value="false"></symbol>
 	<symbol name='OVERRIDEWXPBASE_CHECKBOX' type="checkbox" value="false"></symbol>
 	<symbol name='OVERRIDEWNETBASE_CHECKBOX' type="checkbox" value="false"></symbol>
 	<symbol name='OVERRIDEWLHBASE_CHECKBOX' type="checkbox" value="false"></symbol>
+	<symbol name='OVERRIDEW7BASE_CHECKBOX' type="checkbox" value="false"></symbol>
 	<symbol name='OVERRIDEDDKBUILD_TEXT' type="text" value="C:\WINDDK\ddkbuild.cmd"></symbol>
-	<symbol name='OVERRIDEW2KBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
 	<symbol name='OVERRIDEWXPBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
 	<symbol name='OVERRIDEWNETBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
 	<symbol name='OVERRIDEWLHBASE_TEXT' type="text" value="C:\WINDDK"></symbol>
+	<symbol name='OVERRIDEW7BASE_TEXT' type="text" value="C:\WINDDK"></symbol>
 	<symbol name='SOURCE_FILTER' type="text" value="cpp;c;cxx;def;asm;mc"></symbol>
 	<symbol name='HEADER_FILTER' type="text" value="h;hpp;hxx"></symbol>
 	<symbol name='RESOURCE_FILTER' type="text" value="rc;mc;ico;cur;bmp;dlg;rc2"></symbol>
@@ -171,10 +171,10 @@ function EnDisAbleOverrideCheckbox(str)
 function EnDisAbleAllOverrideCheckboxes()
 {
 	EnDisAbleOverrideCheckbox("OVERRIDEDDKBUILD_CHECKBOX");
-	EnDisAbleOverrideCheckbox("OVERRIDEW2KBASE_CHECKBOX");
 	EnDisAbleOverrideCheckbox("OVERRIDEWXPBASE_CHECKBOX");
 	EnDisAbleOverrideCheckbox("OVERRIDEWNETBASE_CHECKBOX");
 	EnDisAbleOverrideCheckbox("OVERRIDEWLHBASE_CHECKBOX");
+	EnDisAbleOverrideCheckbox("OVERRIDEW7BASE_CHECKBOX");
 }
 
 function PropertySheetCheckbox(elem)
@@ -182,24 +182,24 @@ function PropertySheetCheckbox(elem)
 	if(!elem.checked)
 	{
 		document.getElementById("OVERRIDEDDKBUILD_CHECKBOX").checked = false;
-		document.getElementById("OVERRIDEW2KBASE_CHECKBOX").checked = false;
 		document.getElementById("OVERRIDEWXPBASE_CHECKBOX").checked = false;
 		document.getElementById("OVERRIDEWNETBASE_CHECKBOX").checked = false;
 		document.getElementById("OVERRIDEWLHBASE_CHECKBOX").checked = false;
+		document.getElementById("OVERRIDEW7BASE_CHECKBOX").checked = false;
 
 		document.getElementById("OVERRIDEDDKBUILD_CHECKBOX").disabled = true;
-		document.getElementById("OVERRIDEW2KBASE_CHECKBOX").disabled = true;
 		document.getElementById("OVERRIDEWXPBASE_CHECKBOX").disabled = true;
 		document.getElementById("OVERRIDEWNETBASE_CHECKBOX").disabled = true;
 		document.getElementById("OVERRIDEWLHBASE_CHECKBOX").disabled = true;
+		document.getElementById("OVERRIDEW7BASE_CHECKBOX").disabled = true;
 	}
 	else
 	{
 		document.getElementById("OVERRIDEDDKBUILD_CHECKBOX").disabled = false;
-		document.getElementById("OVERRIDEW2KBASE_CHECKBOX").disabled = false;
 		document.getElementById("OVERRIDEWXPBASE_CHECKBOX").disabled = false;
 		document.getElementById("OVERRIDEWNETBASE_CHECKBOX").disabled = false;
 		document.getElementById("OVERRIDEWLHBASE_CHECKBOX").disabled = false;
+		document.getElementById("OVERRIDEW7BASE_CHECKBOX").disabled = false;
 	}
 	EnDisAbleAllOverrideCheckboxes();
 }
@@ -390,13 +390,6 @@ function PrefastCheckboxes()
 									<input type="text" id="OVERRIDEDDKBUILD_TEXT" style="width:95%; margin-left:0.5em;" />
 								</div>
 								<div>
-									<input type="checkbox" id="OVERRIDEW2KBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
-									<label for="OVERRIDEW2KBASE_CHECKBOX" accesskey="2"
-										title="Allows you to override the W2KBASE environment variable that is used to determine the base path of the Windows 2000 DDK(s)."
-									>Override <tt>W<u>2</u>KBASE</tt> (Windows 2000 DDK):</label><br />
-									<input type="text" id="OVERRIDEW2KBASE_TEXT" style="width:95%; margin-left:0.5em;" />
-								</div>
-								<div>
 									<input type="checkbox" id="OVERRIDEWXPBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
 									<label for="OVERRIDEWXPBASE_CHECKBOX" accesskey="X"
 										title="Allows you to override the WXPBASE environment variable that is used to determine the base path of the Windows XP DDK(s)."
@@ -413,9 +406,16 @@ function PrefastCheckboxes()
 								<div>
 									<input type="checkbox" id="OVERRIDEWLHBASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
 									<label for="OVERRIDEWLHBASE_CHECKBOX" accesskey="L"
-										title="Allows you to override the WLHBASE environment variable that is used to determine the base path of the Windows Vista or Longhorn WDK(s)."
-									>Override <tt>W<u>L</u>HBASE</tt> (Longhorn/Vista WDK):</label><br />
+										title="Allows you to override the WLHBASE environment variable that is used to determine the base path of the Windows Vista/2008 Server WDK(s)."
+									>Override <tt>W<u>L</u>HBASE</tt> (Vista/2008 Server WDK):</label><br />
 									<input type="text" id="OVERRIDEWLHBASE_TEXT" style="width:95%; margin-left:0.5em;" />
+								</div>
+								<div>
+									<input type="checkbox" id="OVERRIDEW7BASE_CHECKBOX" onclick="EnDisAbleOverrideCheckbox(this.id);" />
+									<label for="OVERRIDEW7BASE_CHECKBOX" accesskey="7"
+										title="Allows you to override the W7BASE environment variable that is used to determine the base path of the Windows 7/2008 Server R2 WDK(s)."
+									>Override <tt>W<u>7</u>BASE</tt> (Windows 7/2008 Server R2 WDK):</label><br />
+									<input type="text" id="OVERRIDEW7BASE_TEXT" style="width:95%; margin-left:0.5em;" />
 								</div>
 							</div>
 							<div>&copy; 2006-2009 by <b>Oliver Schneider</b><br />
