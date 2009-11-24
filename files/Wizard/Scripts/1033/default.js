@@ -50,24 +50,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var thePrefastOption = new Array("", "prefast");
-var theDDKs = new Array("W2K", "WXP", "WNET", "WLH", "W7");
+var theDDKs = new Array("W7", "WLH", "WNET", "WXP");
 var theCfgsName = new Array("free", "checked", "free (PREfast)", "checked (PREfast)");
 var theCfgsCmdline = new Array("free .", "checked .", "free .", "checked .");
 var theCfgsPrefast = new Array("", "", " -prefast", " -prefast");
 var BuildCommandLine = new Array(
-		"W2K",
-		"W2K64",
-
-		"WXP",
-		"WXP64",
-		"WXP2K",
-
-		"WNET",
-		"WNET64",
-		"WNETXP",
-		"WNETXP64",
-		"WNETAMD64",
-		"WNET2K",
+		"W7",
+		"W7I64",
+		"W7X64",
+		"W7LH",
+		"W7LHI64",
+		"W7LHX64",
+		"W7NET",
+		"W7NETI64",
+		"W7NETX64",
+		"W7XP",
 
 		"WLH",
 		"WLH2K",
@@ -79,24 +76,38 @@ var BuildCommandLine = new Array(
 		"WLHI64",
 		"WLHX64",
 
-		"W7",
-		"W7I64",
-		"W7X64",
-		"W7LH",
-		"W7LHI64",
-		"W7LHX64",
-		"W7NET",
-		"W7NETI64",
-		"W7NETX64",
-		"W7XP"
+		"WNET",
+		"WNET64",
+		"WNETXP",
+		"WNETXP64",
+		"WNETAMD64",
+		"WNET2K",
+
+		"WXP",
+		"WXP64",
+		"WXP2K"
 	);
 var BuildIncPath = new Array(
-		"",
-		"",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
 
-		"",
-		"",
-		"",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
 
 		"\\wnet\\",
 		"\\wnet\\",
@@ -105,43 +116,22 @@ var BuildIncPath = new Array(
 		"\\wnet\\",
 		"\\w2k\\",
 
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\",
-		"\\"
-
+		"",
+		"",
+		""
 	);
 // 0 = 32bit, 1 = AMD64, 2 = IA64
 var Build64bit = new Array(
-		0, // W2K
-		2, // W2K64
-
-		0, // WXP
-		2, // WXP64
-		0, // WXP2K
-
-		0, // WNET
-		2, // WNET64
-		0, // WNETXP
-		2, // WNETXP64
-		1, // WNETAMD64
-		0, // WNET2K
+		0, // W7
+		2, // W7I64
+		1, // W7X64
+		0, // W7LH
+		2, // W7LHI64
+		1, // W7LHX64
+		0, // W7NET
+		2, // W7NETI64
+		1, // W7NETX64
+		0,  // W7XP
 
 		0, // WLH
 		0, // WLH2K
@@ -153,33 +143,29 @@ var Build64bit = new Array(
 		2, // WLHI64
 		1, // WLHX64
 
-		0, // W7
-		2, // W7I64
-		1, // W7X64
-		0, // W7LH
-		2, // W7LHI64
-		1, // W7LHX64
-		0, // W7NET
-		2, // W7NETI64
-		1, // W7NETX64
-		0  // W7XP
+		0, // WNET
+		2, // WNET64
+		0, // WNETXP
+		2, // WNETXP64
+		1, // WNETAMD64
+		0, // WNET2K
 
-
+		0, // WXP
+		2, // WXP64
+		0  // WXP2K
 	);
 
 var BuildDefines = new Array(
-		"WINVER=0x0500", // W2K
-		"WINVER=0x0500;_WIN64", // W2K64
-		"WINVER=0x0500", // WXP
-		"WINVER=0x0500;_WIN64", // WXP64
-		"WINVER=0x0501", // WXP2K
-
-		"WINVER=0x0502", // WNET
-		"WINVER=0x0502;_WIN64", // WNET64
-		"WINVER=0x0501", // WNETXP
-		"WINVER=0x0501;_WIN64", // WNETXP64
-		"WINVER=0x0502;_WIN64", // WNETAMD64
-		"WINVER=0x0500", // WNET2K
+		"WINVER=0x0601;NTDDI_VERSION=0x06010000", // W7
+		"WINVER=0x0601;NTDDI_VERSION=0x06010000;_WIN64", // W7I64
+		"WINVER=0x0601;NTDDI_VERSION=0x06010000;_WIN64", // W7X64
+		"WINVER=0x0600;NTDDI_VERSION=0x06000100", // W7LH
+		"WINVER=0x0600;NTDDI_VERSION=0x06000100;_WIN64", // W7LHI64
+		"WINVER=0x0600;NTDDI_VERSION=0x06000100;_WIN64", // W7LHX64
+		"WINVER=0x0502;NTDDI_VERSION=0x05020100", // W7NET
+		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // W7NETI64
+		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // W7NETX64
+		"WINVER=0x0501;NTDDI_VERSION=0x05010200", // W7XP
 
 		"WINVER=0x0600;NTDDI_VERSION=0x06000000", // WLH
 		"WINVER=0x0500;NTDDI_VERSION=0x05000400", // WLH2K
@@ -191,16 +177,16 @@ var BuildDefines = new Array(
 		"WINVER=0x0600;NTDDI_VERSION=0x06000000;_WIN64", // WLHI64
 		"WINVER=0x0600;NTDDI_VERSION=0x06000000;_WIN64",  // WLHX64
 
-		"WINVER=0x0601;NTDDI_VERSION=0x06010000", // W7
-		"WINVER=0x0601;NTDDI_VERSION=0x06010000;_WIN64", // W7I64
-		"WINVER=0x0601;NTDDI_VERSION=0x06010000;_WIN64", // W7X64
-		"WINVER=0x0600;NTDDI_VERSION=0x06000100", // W7LH
-		"WINVER=0x0600;NTDDI_VERSION=0x06000100;_WIN64", // W7LHI64
-		"WINVER=0x0600;NTDDI_VERSION=0x06000100;_WIN64", // W7LHX64
-		"WINVER=0x0502;NTDDI_VERSION=0x05020100", // W7NET
-		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // W7NETI64
-		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // W7NETX64
-		"WINVER=0x0501;NTDDI_VERSION=0x05010200"  // W7XP
+		"WINVER=0x0502", // WNET
+		"WINVER=0x0502;_WIN64", // WNET64
+		"WINVER=0x0501", // WNETXP
+		"WINVER=0x0501;_WIN64", // WNETXP64
+		"WINVER=0x0502;_WIN64", // WNETAMD64
+		"WINVER=0x0500", // WNET2K
+
+		"WINVER=0x0500", // WXP
+		"WINVER=0x0500;_WIN64", // WXP64
+		"WINVER=0x0501" // WXP2K
 	);
 
 ///////////////////////////////////////////////////////////////////////////////
