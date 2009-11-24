@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///
-/// Copyright (c) 2006-2007 by Oliver Schneider (assarbad.net)
+/// Copyright (c) 2006-2009 by Oliver Schneider (assarbad.net)
 /// This software is provided 'as-is', without any express or implied warranty.
 /// In no event will the authors be held liable for any damages arising from
 /// the use of this software.
@@ -32,6 +32,7 @@
 ///                    "VCWizCtlClass"
 ///
 /// Revisions:
+///  0010 [2009-11-24] Added variables for Windows 7 WDK
 ///  0009 [2007-09-08] Removed variable PROJECT_NAME_UPPERCASE.
 ///  0008 [2007-09-07] Added variable PROJECT_FILENAME (for .c and .cpp),
 ///                    PROJECT_NAME_UPPERCASE.
@@ -49,7 +50,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var thePrefastOption = new Array("", "prefast");
-var theDDKs = new Array("W2K", "WXP", "WNET", "WLH");
+var theDDKs = new Array("W2K", "WXP", "WNET", "WLH", "W7");
 var theCfgsName = new Array("free", "checked", "free (PREfast)", "checked (PREfast)");
 var theCfgsCmdline = new Array("free .", "checked .", "free .", "checked .");
 var theCfgsPrefast = new Array("", "", " -prefast", " -prefast");
@@ -71,11 +72,23 @@ var BuildCommandLine = new Array(
 		"WLH",
 		"WLH2K",
 		"WLHXP",
+		"WLHXP64",
 		"WLHNET",
 		"WLHNETI64",
 		"WLHNETX64",
 		"WLHI64",
-		"WLHX64"
+		"WLHX64",
+
+		"W7",
+		"W7I64",
+		"W7X64",
+		"W7LH",
+		"W7LHI64",
+		"W7LHX64",
+		"W7NET",
+		"W7NETI64",
+		"W7NETX64",
+		"W7XP"
 	);
 var BuildIncPath = new Array(
 		"",
@@ -99,7 +112,20 @@ var BuildIncPath = new Array(
 		"\\",
 		"\\",
 		"\\",
+		"\\",
+		"\\",
+
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
+		"\\",
 		"\\"
+
 	);
 // 0 = 32bit, 1 = AMD64, 2 = IA64
 var Build64bit = new Array(
@@ -120,11 +146,25 @@ var Build64bit = new Array(
 		0, // WLH
 		0, // WLH2K
 		0, // WLHXP
+		2, // WLHXP64
 		0, // WLHNET
 		2, // WLHNETI64
 		1, // WLHNETX64
 		2, // WLHI64
-		1  // WLHX64
+		1, // WLHX64
+
+		0, // W7
+		2, // W7I64
+		1, // W7X64
+		0, // W7LH
+		2, // W7LHI64
+		1, // W7LHX64
+		0, // W7NET
+		2, // W7NETI64
+		1, // W7NETX64
+		0  // W7XP
+
+
 	);
 
 var BuildDefines = new Array(
@@ -144,11 +184,23 @@ var BuildDefines = new Array(
 		"WINVER=0x0600;NTDDI_VERSION=0x06000000", // WLH
 		"WINVER=0x0500;NTDDI_VERSION=0x05000400", // WLH2K
 		"WINVER=0x0501;NTDDI_VERSION=0x05010200", // WLHXP
+		"WINVER=0x0501;NTDDI_VERSION=0x05010200;_WIN64", // WLHXP64
 		"WINVER=0x0502;NTDDI_VERSION=0x05020100", // WLHNET
 		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // WLHNETI64
 		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // WLHNETX64
 		"WINVER=0x0600;NTDDI_VERSION=0x06000000;_WIN64", // WLHI64
-		"WINVER=0x0600;NTDDI_VERSION=0x06000000;_WIN64"  // WLHX64
+		"WINVER=0x0600;NTDDI_VERSION=0x06000000;_WIN64",  // WLHX64
+
+		"WINVER=0x0601;NTDDI_VERSION=0x06010000", // W7
+		"WINVER=0x0601;NTDDI_VERSION=0x06010000;_WIN64", // W7I64
+		"WINVER=0x0601;NTDDI_VERSION=0x06010000;_WIN64", // W7X64
+		"WINVER=0x0600;NTDDI_VERSION=0x06000100", // W7LH
+		"WINVER=0x0600;NTDDI_VERSION=0x06000100;_WIN64", // W7LHI64
+		"WINVER=0x0600;NTDDI_VERSION=0x06000100;_WIN64", // W7LHX64
+		"WINVER=0x0502;NTDDI_VERSION=0x05020100", // W7NET
+		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // W7NETI64
+		"WINVER=0x0502;NTDDI_VERSION=0x05020100;_WIN64", // W7NETX64
+		"WINVER=0x0501;NTDDI_VERSION=0x05010200"  // W7XP
 	);
 
 ///////////////////////////////////////////////////////////////////////////////
