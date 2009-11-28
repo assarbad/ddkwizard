@@ -8,6 +8,6 @@ TARGETTYPE=
 #BROWSERFILE=<some path>
 
 # Additional defines for the C/C++ preprocessor
-#C_DEFINES=
+C_DEFINES=$(C_DEFINES)
 
 SOURCES=
