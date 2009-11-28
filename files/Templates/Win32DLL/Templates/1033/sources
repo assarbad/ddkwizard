@@ -10,10 +10,8 @@ USE_MSVCRT=1
 [!if STRICTERCPP_CHECKBOX]
 USE_STL=1
 STL_VER=70
-
-# Exception handling on stack
-USER_C_FLAGS=$(USER_C_FLAGS) /EHsc
 [!endif]
+USE_NATIVE_EH=1
 
 [!if MAKEFILEINC_CHECKBOX]
 # Use additional include file
