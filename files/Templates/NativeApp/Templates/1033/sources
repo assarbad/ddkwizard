@@ -27,7 +27,7 @@ INCLUDES=$(DDK_INC_PATH);$(CRT_INC_PATH);$(SDK_INC_PATH);$(IFSKIT_INC)
 
 TARGETLIBS=$(DDK_LIB_PATH)\nt.lib $(DDK_LIB_PATH)\ntdll.lib
 
-SOURCES=[!output PROJECT_FILENAME].cpp \
+SOURCES=[!output PROJECT_FILENAME] \
 [!if STRICTERCPP_CHECKBOX]
         NtStartup.cpp \
 [!else]
