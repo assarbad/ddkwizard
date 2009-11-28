@@ -50,7 +50,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var thePrefastOption = new Array("", "prefast");
-var theDDKs = new Array("W7", "WLH", "WNET", "WXP");
+var theDDKs = new Array("WXP", "WNET", "WLH", "W7");
 var theCfgsName = new Array("free", "checked", "free (PREfast)", "checked (PREfast)");
 var theCfgsCmdline = new Array("free .", "checked .", "free .", "checked .");
 var theCfgsPrefast = new Array("", "", " -prefast", " -prefast");
@@ -269,6 +269,7 @@ function OnFinish(selProj, selObj)
 			if(strDDKs.indexOf(i) != -1)
 			try
 			{
+				// wizard.ReportError(strDDKs + " " + theDDKs[i] + " " + i, false);
 				var strProjectNameWithExt = "";
 				var strProjectDdkToUse = theDDKs[i];
 				if(strProjectDdkToUse.length)
@@ -401,8 +402,8 @@ function AddFilters(proj, strProjectName, strProjectPath, InfFile)
 ///////////////////////////////////////////////////////////////////////////////
 ///
 /// This function sets the "solution configuration" to match the respective
-/// "project configuration". I.e.: if you have a W2K project, it will only be
-/// built if the respective "solution configuration" is of W2K type.
+/// "project configuration". I.e.: if you have a WXP project, it will only be
+/// built if the respective "solution configuration" is of WXP type.
 ///
 ///////////////////////////////////////////////////////////////////////////////
 function SetSolutionConfigs(Solution)
@@ -516,12 +517,6 @@ function AddConfigPerDdk(proj, strProjectName, iDDK)
 					// User does want PREfast only for checked configuration
 					continue;
 				}
-				// The W2K DDK did not support PREfast, ...
-				if((bBuildPrefast) && (iDDK == 0))
-				{
-					// ... so no need to create the respective project config
-                                        continue;
-				}
 				// Build the name of the configuration
 				var strCfgName = BuildCommandLine[j] + " " + theCfgsName[i];
 				// Add it to the current project
@@ -603,10 +598,10 @@ function AddConfig(proj, strProjectName, iDDK)
 	{
 		switch(iDDK)
 		{
-		case 0: // W2K
-		case 1: // WXP
-		case 2: // WNET
-		case 3: // WLH
+		case 0: // WXP
+		case 1: // WNET
+		case 2: // WLH
+		case 3: // W7
 			// For every possible configuration of this DDK add one ...
 			AddConfigPerDdk(proj, strProjectName, iDDK);
 			// Now delete the obsolete configurations
@@ -758,9 +753,6 @@ function GetTargetName(strName, strProjectName)
 				return "";
 			}
 		}
-
-
-
 		return strTarget;
 	}
 	catch(e)
