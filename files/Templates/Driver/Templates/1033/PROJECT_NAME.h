@@ -35,7 +35,7 @@ PRESET_UNICODE_STRING(usDeviceName, DEVICE_NAME);
 PRESET_UNICODE_STRING(usSymlinkName, SYMLINK_NAME);
 
 #ifndef FILE_DEVICE_[!output PROJECT_PREFIX]
-#define FILE_DEVICE_[!output PROJECT_PREFIX] 0x800
+#define FILE_DEVICE_[!output PROJECT_PREFIX] 0x8000
 #endif
 
 // Values defined for "Method"
