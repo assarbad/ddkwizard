@@ -1,4 +1,4 @@
-#############################################################################
+﻿#############################################################################
 # Include Modern UI
 
   !include "MUI.nsh"
@@ -6,7 +6,7 @@
   # Other Defines needed
   !define PRODUCT_NAME "DDKWizard"
   !define AUTHOR_NAME "Oliver Schneider (assarbad.net)"
-  !define COPYRIGHT_YEAR "� 2006-2009"
+  !define COPYRIGHT_YEAR "© 2006-2009"
   !define DISPLAY_VERSION "1.3.0"
   !define FILE_PRODUCT_VERSION "1.3.0.0"
   !define FILE_VERSION_COMMENTS "DDKWizard provides DDKBUILD project templates for Visual Studio .NET, .NET 2003, 2005 and 2008"
@@ -221,10 +221,10 @@ SectionEnd
 Function CopyScripts
   SetOutPath $0
   File /r /x .svn .\files\Wizard\*
+# Remove stuff from older versions
   Delete "$0\Templates\1033\CustomVars.vsprops"
-#  FileOpen $R0 '$0\HTML\1033\Config.ini' w
-#  FileWrite $R0 "[General]$\r$\nInstDir=$INSTDIR$\r$\n" # Line break
-#  FileClose $R0
+  Delete "$0\1033\Styles.css"
+  RMDir "$0\1033"
 FunctionEnd
 
 Function SpecificProductInstall
