@@ -4,7 +4,7 @@
 ///
 /// Defines for the version information in the resource file
 ///
-/// (File was in the PUBLIC DOMAIN  - Created by: ddkwizard\.assarbad\.net)
+/// (File was in the PUBLIC DOMAIN  - Created by: ddkwizard.assarbad.net)
 ///////////////////////////////////////////////////////////////////////////////
 
 // $Id$

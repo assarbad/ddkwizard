@@ -63,23 +63,17 @@ function DDKWizard_AddGlobalSymbol_(sKey, sValue)
 	if(sKey == "Author")
 	{
 		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_AUTHOR', sValue);
-		var re = /\/\//i;
-		sValue.replace(re, "/##/"); // Make sure to "escape special characters"
-		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_AUTHOR_C', sValue);
+		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_AUTHOR_C', sValue.replace(/\/\//mg, "/##/"));
 	}
 	else if(sKey == "CompanyName")
 	{
 		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_COMPANY', sValue);
-		var re = /\/\//i;
-		sValue.replace(re, "/##/"); // Make sure to "escape special characters"
-		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_COMPANY_C', sValue);
+		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_COMPANY_C', sValue.replace(/\/\//mg, "/##/"));
 	}
 	else if(sKey == "Website")
 	{
 		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_WEBSITE', sValue);
-		var re = /\/\//i;
-		sValue.replace(re, "/##/"); // Make sure to "escape special characters"
-		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_WEBSITE_C', sValue);
+		oWizard.AddSymbol('DDKWIZ_USERVARIABLE_WEBSITE_C', sValue.replace(/\/\//mg, "/##/"));
 	}
 }
 
