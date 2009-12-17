@@ -168,7 +168,7 @@ Function CreateVSZ_${product}
 FunctionEnd
 !macroend
 
-Section "-Required"
+Section "-Required" always_install
   SectionIn RO
   SetOverwrite on
 
@@ -203,7 +203,7 @@ Section "-Required"
   File .\files\${SCRIPT_FILE_NAME}
   # Only overwrite if the user wants it!!!
   IfFileExists $INSTDIR\${CONFIG_FILE_NAME} 0 Overwrite_Config
-  MessageBox MB_YESNO "Do you want to overwrite the existing DDKWizard configuration file?$\nNote: This will undo any customizations you made!$\n$\nOverwrite it?" IDYES 0 IDNO No_Overwrite_Config
+  MessageBox MB_YESNO "Do you want to overwrite the existing DDKWizard configuration file?$\nNote: This will undo any customizations you made!$\n$\nOverwrite it?" /SD IDNO IDNO No_Overwrite_Config IDYES 0
 Overwrite_Config:
   File .\files\${CONFIG_FILE_NAME}
 No_Overwrite_Config:
@@ -213,7 +213,7 @@ No_Overwrite_Config:
   Goto EndOfInstallSection
 No_Visual_Studio_Found:
   StrCpy $0 "Can't install. The installer could not find any of the required products."
-  MessageBox MB_OK "$0$\nPress 'Cancel' in the installer window."
+  MessageBox MB_OK "$0$\nPress 'Cancel' in the installer window." /SD IDOK
   Abort $0
 EndOfInstallSection:
 SectionEnd
@@ -283,6 +283,8 @@ FunctionEnd
 #############################################################################
 Function .onInit
   SetCurInstType 0
+  IntOp $0 ${SF_SELECTED} | ${SF_RO}
+  SectionSetFlags always_install $0
 FunctionEnd
 
 Function CreateUninstallEntry
