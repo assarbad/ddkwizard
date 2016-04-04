@@ -19,6 +19,9 @@ integrity, and they are available from the `download section`_.
 Please make sure to verify the signature using either ``signtool`` or
 ``sigcheck`` from live.sysinternals.com_ (both from Microsoft).
 
+Prior to moving the downloads to Bitbucket in April 2016, there were nearly
+200,000 downloads of the setup and nearly 61,000 downloads for the manual.
+
 License
 -------
 All projects created by DDKWizard can be put under whatever license you like to
