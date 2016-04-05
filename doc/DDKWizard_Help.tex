@@ -1,7 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DDKWizard documentation
-%%
-%% $Id$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[a4paper,titlepage]{report}
 \usepackage{ae}
@@ -23,7 +21,7 @@
     bookmarksnumbered=false,
     pdfstartview=FitH,
     pdftitle={DDKWizard Manual},
-    pdfkeywords={DDKBUILD, DDKWizard, Oliver Schneider, Assarbad, DDK, Visual Studio, Project Templates, Wizard, DDK project, DDK project wizard, DDK wizard, WDK, Driver Development Kit, Windows Driver Kit},
+    pdfkeywords={DDKBUILD, ddkbuild.cmd, DDKWizard, Oliver Schneider, DDK, Visual Studio, Project Templates, Wizard, DDK project, DDK project wizard, DDK wizard, WDK, Driver Development Kit, Windows Driver Kit},
     pdfsubject={Manual for DDKBUILD and DDKWizard with its project templates},
     pdfcreator={LaTeX},
     pdfauthor={Oliver Schneider (assarbad.net)}
@@ -55,7 +53,7 @@
 \newcommand{\optiondeco}[1]{#1\vspace{0.1cm}}
 \newcommand{\inioption}[1]{\\\textcolor[rgb]{0.00,0.00,0.40}{\textsl{Value name:} \texttt{#1}}}
 \def\ddkwiz{D\kern-.09em D\kern-.09em K\kern-.20em \raise-.20ex\hbox{W}\kern-.15em\raise.20ex\hbox{\it{i}}\kern-.02em{zard}}
-\newcommand{\ddkwizver}[0]{\ddkwiz{} v1.3.1}
+\newcommand{\ddkwizver}[0]{\ddkwiz{} v1.3.0a}
 \newcommand{\prefast}[0]{\textsf{PRE\textsl{f}ast}}
 \newcommand{\solcfg}[2]{\texttt{#1 free} and \texttt{#1 checked}:\\#2}
 \newcommand{\solcfgsixfour}[2]{\texttt{#1 free} and \texttt{#1 checked} \textcolor[gray]{0.40}{\textsf{\small(only if 64bit support was activated)}}:\\#2}
@@ -73,8 +71,8 @@
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{}
 \renewcommand{\subsectionmark}[1]{}
-\newcommand{\myleftfooter}[0]{\footnotesize{\textsf{\href{http://ddkwizard.assarbad.net}{\textcolor[gray]{0.5}{\copyright~2006-\arabic{copyrightyear} Oliver Schneider}}}}}
-\newcommand{\myrightfooter}[0]{\footnotesize{\textsf{\textcolor[gray]{0.5}{$ $Revision$ $}}}}
+\newcommand{\myleftfooter}[0]{\footnotesize{\textsf{\href{https://bitbucket.org/assarbad/ddkwizard}{\textcolor[gray]{0.5}{\copyright~2006-\arabic{copyrightyear} Oliver Schneider}}}}}
+\newcommand{\myrightfooter}[0]{}
 \newcommand{\myleftheader}[0]{\textsf{\textcolor[gray]{0.5}{\ddkwizver{} Manual}}}
 \newcommand{\myrightheader}[0]{\textsf{\textcolor[gray]{0.5}{\leftmark}}}
 \lfoot[\fancyplain{\myleftfooter}{\myleftfooter}]{\fancyplain{\myleftfooter}{\myleftfooter}}
@@ -105,14 +103,11 @@
 \item{\large{Frequently Asked Questions (FAQ)}}
 \item{\large{Figures}}
 \end{itemize}
-\vskip 2.5cm
-\textsf{{\emph{\textcolor[gray]{0.75}{May the source be with you, stranger ... ;-)}}}\\}
-\vskip 2.25cm
+\vskip 5.5cm
 \textsc{Created:} \isodate\today\\
 \textsc{Author:} \href{http://assarbad.net/en/contact}{Oliver Schneider}\\
 \vskip 0.7cm
-Copyright \copyright\hspace{0.1ex}~2006-\arabic{copyrightyear} Oliver Schneider (\textsf{\href{http://assarbad.net}{\linkclr{assarbad.net}}})
-{\small\color{gray}\verb+$Id$+}\\
+Copyright \copyright\hspace{0.1ex}~2006-\arabic{copyrightyear} Oliver Schneider (\textsf{\href{http://assarbad.net}{\linkclr{assarbad.net}}})\\
 
 \addvspace{0.5cm}
 {\small\color{gray}\textsf{Trademarks appear throughout this text
@@ -142,7 +137,7 @@ goes indeed far beyond what batch provides!} and also add some additional featur
 You can just download the original version (\texttt{.bat}) as well as the rewritten
 one (\texttt{.cmd}) from \extlink{http://www.osronline.com/article.cfm?article=43}{OSR
 Online}\footnote{You need to be logged on to download the files.}
-or from the \ddkwiz{} website at \extlinktt{http://ddkwizard.assarbad.net}{ddkwizard.assarbad.net}.
+or from the \ddkwiz{} project page at \extlinktt{https://bitbucket.org/assarbad/ddkwizard}{assarbad/ddkwizard}.
 Soon, however, the need for generic \texttt{DDKBUILD} project creation became ``overwhelming'' ...\\
 
 As a side-note: There is another\footnote{... as far as I know the continuation of
@@ -159,7 +154,7 @@ versions from OSR take the same arguments, so using it with ``the other''
 \section*{Compatibility}
 \addcontentsline{toc}{section}{\numberline{}Compatibility}
 \ddkwiz{} works with the DDKs of Windows XP, Windows 2003 Server and newer
-WDKs\footnote{Tested up to and including the 7600.16385.0 WDK.}.
+WDKs\footnote{Tested up to and including the 7600.16385.1 WDK.}.
 It does not include any configurations for WDF projects and may never include
 them in future. I'll just wait for feedback before deciding about it.\\
 It is compatible with Visual Studio .NET, Visual Studio .NET 2003, Visual Studio 2005
@@ -215,7 +210,7 @@ better source files in existing templates) are \emph{very} welcome.}
 
 \section*{Website}
 \addcontentsline{toc}{section}{\numberline{}Website}
-The website of \ddkwiz{} is at \extlinktt{http://ddkwizard.assarbad.net}{ddkwizard.assarbad.net}.
+The website of \ddkwiz{} is at \extlinktt{http://ddkwizard.assarbad.net}{ddkwizard.assarbad.net}, its project home at \extlinktt{https://bitbucket.org/assarbad/ddkwizard}{assarbad/ddkwizard}.
 There you will find this documentation for download as well as the latest
 version of the templates and their installer.
 
@@ -235,29 +230,28 @@ questions \textsf{;-)}} - \textbf{you have to!}
 \chapter*{License\markboth{License}{}}\thispagestyle{fancy}
 \addcontentsline{toc}{chapter}{\numberline{}License}
 
-The following license applies to all parts of \ddkwiz{}, \emph{except for any actual
-project templates, which are released into the \texttt{PUBLIC DOMAIN} - see below}.
+The following license applies to all parts of \ddkwiz{}, \emph{except for any actual project templates, which are released into the \texttt{PUBLIC DOMAIN} - see below}.
 
 \begin{verbatim}
-Copyright (c) 2006-2009 by Oliver Schneider (assarbad.net)
+Copyright (c) 2006-2016 Oliver Schneider (assarbad.net)
 
-This software is provided 'as-is', without any express or implied warranty. In
-no event will the authors be held liable for any damages arising from the use
-of this software.
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-Permission is granted to anyone to use this software for any purpose, including
-commercial applications, and to alter it and redistribute it freely, subject to
-the following restrictions:
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-  1. The origin of this software must not be misrepresented; you must not claim
-     that you wrote the original software. If you use this software in a product,
-     an acknowledgment in the product documentation would be appreciated but is
-     not required.
-
-  2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-
-  3. This notice may not be removed or altered from any source distribution.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 \end{verbatim}
 
 The \emph{included} project templates are all in the \texttt{PUBLIC DOMAIN}, but the same
@@ -295,8 +289,7 @@ This is the classic. \texttt{DDKBUILD.BAT} is easily installed by following thes
 few steps:
 \begin{enumerate}
   \item
-    Download \texttt{DDKBUILD.BAT} from \extlinktt{http://ddkwizard.assarbad.net}{ddkwizard.assarbad.net}
-    or \extlink{http://www.osronline.com/article.cfm?article=43}{this page}.
+    Download \texttt{DDKBUILD.BAT} from \extlink{http://www.osronline.com/article.cfm?article=43}{this page}.
   \item
     Copy \texttt{DDKBUILD.BAT} into a directory where you want it to reside. I usually
     choose a directory that can be accessed from anywhere else. Let us say you have
