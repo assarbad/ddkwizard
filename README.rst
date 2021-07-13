@@ -1,5 +1,4 @@
-﻿===========
- DDKWizard
+﻿ DDKWizard
 ===========
 
 * Download the `latest release v1.3.0a`_.
@@ -41,8 +40,8 @@ NB: prior to version 1.2.0 from 2008 (before the Subversion repository from
 which I converted this one even started) the scripts and HTML files which
 contain the DDKWizard logic they were released under the GPL version 2 from 1991.
 
-.. _latest release v1.3.0a: https://bitbucket.org/assarbad/ddkwizard/downloads/ddkwizard_setup_v1.3.0a-signed.exe
-.. _ddkbuild can be found here: https://bitbucket.org/assarbad/ddkbuild
-.. _download section: https://bitbucket.org/assarbad/ddkwizard/downloads
+.. _latest release v1.3.0a: https://sourceforge.net/projects/ddkwizard/files/legacy-releases/ddkwizard_setup_v1.3.0a-signed.exe/download
+.. _ddkbuild can be found here: https://sourceforge.net/projects/ddkbuild/
+.. _download section: https://sourceforge.net/projects/ddkwizard/files/
 .. _live.sysinternals.com: https://live.sysinternals.com
 .. _here: https://opensource.org/licenses/Zlib
